@@ -46,6 +46,77 @@ Después del despliegue, verifica que:
 
 ## Solución de Problemas
 
+### Error: "Deployment failed with error"
+
+Si ves este error genérico, necesitas obtener el mensaje de error completo:
+
+**Cómo obtener el error completo:**
+
+1. Ve a tu proyecto en [Vercel Dashboard](https://vercel.com/dashboard)
+2. Haz clic en el último deployment (el que falló)
+3. En la parte superior, verás el estado: "Building", "Error", etc.
+4. Haz clic en **"View Build Logs"** o desplázate hacia abajo hasta ver **"Build Logs"**
+5. Busca líneas que contengan:
+   - `Error:` o `error:`
+   - `Failed` o `failed`
+   - `Cannot` o `cannot`
+   - Cualquier mensaje en rojo
+
+**Comparte el error completo** para poder diagnosticar el problema específico.
+
+### Errores Comunes y Soluciones
+
+#### Error: "Cannot find module" o "Module not found"
+
+**Posibles causas:**
+- Imports incorrectos
+- Dependencias faltantes
+- Rutas incorrectas
+
+**Solución:**
+```bash
+# Verificar que todas las dependencias estén instaladas
+npm install
+
+# Verificar que el build funciona localmente
+npm run build
+```
+
+#### Error: "MONGODB_URI is not defined"
+
+**Causa:** Variable de entorno no configurada en Vercel.
+
+**Solución:**
+1. Ve a Settings → Environment Variables
+2. Agrega `MONGODB_URI` con el valor completo
+3. Asegúrate de seleccionar todos los ambientes
+4. Haz un nuevo despliegue
+
+#### Error: "TypeError" o errores de TypeScript
+
+**Posibles causas:**
+- Tipos incorrectos
+- Configuración de TypeScript incorrecta
+
+**Solución:**
+```bash
+# Verificar errores de TypeScript localmente
+npm run build
+
+# Si hay errores, corrígelos antes de hacer push
+```
+
+#### Error: "Command 'npm run build' exited with 1"
+
+**Causa:** El build falló durante la compilación.
+
+**Solución:**
+1. Revisa los logs del build en Vercel
+2. Busca el error específico en los logs
+3. Verifica que el build funciona localmente: `npm run build`
+4. Corrige los errores encontrados
+5. Haz commit y push de las correcciones
+
 ### Error 404: NOT_FOUND
 
 Si ves un error 404, verifica:
