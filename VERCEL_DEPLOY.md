@@ -72,9 +72,45 @@ Si la conexión a MongoDB falla:
 2. Asegúrate de que tu IP esté permitida en MongoDB Atlas (o usa `0.0.0.0/0` para permitir todas)
 3. Verifica los logs de función en Vercel para ver el error exacto
 
-### Advertencias sobre Módulos No Resueltos
+### Warnings y Advertencias
 
-Las advertencias sobre módulos como `kerberos`, `snappy`, etc. son **normales** y no afectan el funcionamiento. Son dependencias opcionales de MongoDB que no son necesarias para la conexión básica.
+#### Warnings de npm sobre paquetes deprecados
+
+Los warnings como estos son **normales** y no afectan el funcionamiento:
+
+```
+npm warn deprecated rimraf@3.0.2
+npm warn deprecated npmlog@5.0.1
+npm warn deprecated inflight@1.0.6
+npm warn deprecated glob@7.2.3
+npm warn deprecated gauge@3.0.2
+npm warn deprecated are-we-there-yet@2.0.0
+```
+
+Estos provienen de dependencias transitivas (dependencias de dependencias) y no afectan tu aplicación.
+
+#### Warning sobre Node.js 20
+
+```
+[WARN] [@astrojs/vercel/serverless] Your project is being built for Node.js 20 as the runtime, which is currently in beta for Vercel Serverless Functions.
+```
+
+Este warning es **solo informativo**. Node.js 20 funciona perfectamente en Vercel, aunque esté en beta para Serverless Functions. El proyecto funcionará correctamente.
+
+#### Advertencias sobre Módulos No Resueltos
+
+Las advertencias sobre módulos como `kerberos`, `snappy`, `aws4`, `socks`, etc. son **normales** y no afectan el funcionamiento:
+
+```
+[@astrojs/vercel] The module "kerberos" couldn't be resolved. This may not be a problem...
+[@astrojs/vercel] The module "snappy" couldn't be resolved. This may not be a problem...
+```
+
+Son dependencias opcionales de MongoDB y Sharp que no son necesarias para la conexión básica. El mensaje mismo dice "This may not be a problem" (Esto puede no ser un problema).
+
+### ✅ Todo está funcionando correctamente
+
+Si ves estos warnings pero el build termina con "Complete!" o "Build Complete!", significa que todo está funcionando correctamente. Los warnings son solo informativos.
 
 ## Configuración Actual
 
