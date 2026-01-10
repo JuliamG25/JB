@@ -89,13 +89,30 @@ npm warn deprecated are-we-there-yet@2.0.0
 
 Estos provienen de dependencias transitivas (dependencias de dependencias) y no afectan tu aplicación.
 
-#### Warning sobre Node.js 20
+#### Warning sobre Versión de Node.js Local
 
 ```
-[WARN] [@astrojs/vercel/serverless] Your project is being built for Node.js 20 as the runtime, which is currently in beta for Vercel Serverless Functions.
+[WARN] [@astrojs/vercel/serverless] 
+The local Node.js version (24) is not supported by Vercel Serverless Functions.
+Your project will use Node.js 18 as the runtime instead.
+Consider switching your local version to 18.
 ```
 
-Este warning es **solo informativo**. Node.js 20 funciona perfectamente en Vercel, aunque esté en beta para Serverless Functions. El proyecto funcionará correctamente.
+Este warning es **solo informativo** y aparece cuando tu versión local de Node.js (en este caso, Node.js 24) es diferente de la que Vercel usa para Serverless Functions (Node.js 18).
+
+**¿Qué significa?**
+- Vercel automáticamente usará Node.js 18 para ejecutar tus funciones serverless
+- Tu código funcionará perfectamente en producción
+- El warning es solo para informarte que hay una diferencia entre tu entorno local y el de producción
+
+**¿Debo cambiar mi versión local de Node.js?**
+No es necesario cambiar tu versión local, pero es recomendable para evitar posibles discrepancias:
+- Si quieres usar Node.js 18 localmente, puedes usar `nvm` (Node Version Manager):
+  ```bash
+  nvm install 18
+  nvm use 18
+  ```
+- El proyecto está configurado para usar Node.js 18.x (especificado en `package.json` → `engines`)
 
 #### Advertencias sobre Módulos No Resueltos
 
@@ -116,7 +133,8 @@ Si ves estos warnings pero el build termina con "Complete!" o "Build Complete!",
 
 - **Adapter**: `@astrojs/vercel/serverless` (v7.0.0)
 - **Output Mode**: `server` (SSR)
-- **Node.js Runtime**: 20.x (automático en Vercel)
+- **Node.js Runtime**: 18.x (automático en Vercel Serverless Functions)
+- **Versión Node.js Local Recomendada**: 18.x (especificado en `package.json` → `engines`)
 
 ## Archivos Importantes
 
