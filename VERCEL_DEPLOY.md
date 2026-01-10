@@ -89,30 +89,37 @@ npm warn deprecated are-we-there-yet@2.0.0
 
 Estos provienen de dependencias transitivas (dependencias de dependencias) y no afectan tu aplicación.
 
-#### Warning sobre Versión de Node.js Local
+#### Requisito de Versión de Node.js
 
+Vercel ahora requiere **Node.js 24.x** para Serverless Functions. Node.js 18.x ha sido discontinuado.
+
+**Configuración requerida:**
+El proyecto está configurado para usar Node.js 24.x en `package.json`:
+```json
+"engines": {
+  "node": "24.x"
+}
 ```
-[WARN] [@astrojs/vercel/serverless] 
-The local Node.js version (24) is not supported by Vercel Serverless Functions.
-Your project will use Node.js 18 as the runtime instead.
-Consider switching your local version to 18.
+
+**Si ves un error sobre Node.js 18.x discontinuado:**
+Asegúrate de que `package.json` especifica Node.js 24.x en el campo `engines`. Si recibes este error:
+```
+Error: Node.js Version "18.x" is discontinued and must be upgraded.
+Please set "engines": { "node": "24.x" } in your `package.json` file.
 ```
 
-Este warning es **solo informativo** y aparece cuando tu versión local de Node.js (en este caso, Node.js 24) es diferente de la que Vercel usa para Serverless Functions (Node.js 18).
+**Solución:**
+1. Actualiza `package.json` para usar `"node": "24.x"` en el campo `engines`
+2. Haz commit y push de los cambios
+3. Re-despliega en Vercel
 
-**¿Qué significa?**
-- Vercel automáticamente usará Node.js 18 para ejecutar tus funciones serverless
-- Tu código funcionará perfectamente en producción
-- El warning es solo para informarte que hay una diferencia entre tu entorno local y el de producción
-
-**¿Debo cambiar mi versión local de Node.js?**
-No es necesario cambiar tu versión local, pero es recomendable para evitar posibles discrepancias:
-- Si quieres usar Node.js 18 localmente, puedes usar `nvm` (Node Version Manager):
+**Versión Local:**
+Para coincidir con el entorno de producción, es recomendable usar Node.js 24.x localmente:
+- Si usas `nvm` (Node Version Manager):
   ```bash
-  nvm install 18
-  nvm use 18
+  nvm install 24
+  nvm use 24
   ```
-- El proyecto está configurado para usar Node.js 18.x (especificado en `package.json` → `engines`)
 
 #### Advertencias sobre Módulos No Resueltos
 
@@ -133,8 +140,8 @@ Si ves estos warnings pero el build termina con "Complete!" o "Build Complete!",
 
 - **Adapter**: `@astrojs/vercel/serverless` (v7.0.0)
 - **Output Mode**: `server` (SSR)
-- **Node.js Runtime**: 18.x (automático en Vercel Serverless Functions)
-- **Versión Node.js Local Recomendada**: 18.x (especificado en `package.json` → `engines`)
+- **Node.js Runtime**: 24.x (requerido por Vercel, especificado en `package.json` → `engines`)
+- **Versión Node.js Local Recomendada**: 24.x (para coincidir con Vercel)
 
 ## Archivos Importantes
 
