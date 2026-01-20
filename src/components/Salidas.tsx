@@ -128,22 +128,49 @@ export default function Salidas() {
     if (!texto || texto.trim() === '') {
       setSugerencias(prev => ({ ...prev, [rowIndex]: [] }));
       setMostrarSugerencias(prev => ({ ...prev, [rowIndex]: false }));
+      setBusqueda(prev => ({ ...prev, [rowIndex]: '' }));
       return;
     }
 
-    const textoBusqueda = texto.toLowerCase().trim();
-    // Filtrar solo productos con stock disponible, buscar por nombre o código de barras
-    const productosFiltrados = productos
-      .filter(p => 
-        p.cantidad > 0 && (
-          p.nombre.toLowerCase().includes(textoBusqueda) ||
-          (p.codigoBarras && p.codigoBarras.toLowerCase().includes(textoBusqueda))
+    const textoBusqueda = texto.trim();
+    const textoBusquedaLower = textoBusqueda.toLowerCase();
+    
+    // Detectar si es un código de barras (solo números, 8-13 dígitos)
+    const esCodigoBarras = /^\d{8,13}$/.test(textoBusqueda);
+    
+    let productosFiltrados: Producto[] = [];
+    
+    if (esCodigoBarras) {
+      // Buscar coincidencia exacta por código de barras (solo con stock)
+      const productoExacto = productos.find(p => 
+        p.cantidad > 0 && p.codigoBarras && p.codigoBarras === textoBusqueda
+      );
+      
+      if (productoExacto) {
+        productosFiltrados = [productoExacto];
+        // Auto-seleccionar si hay coincidencia exacta
+        setTimeout(() => {
+          seleccionarProducto(rowIndex, productoExacto);
+        }, 100);
+      } else {
+        // No se encontró el código de barras o no tiene stock
+        productosFiltrados = [];
+        alert(`⚠️ Producto con código de barras "${textoBusqueda}" no encontrado o sin stock disponible`);
+      }
+    } else {
+      // Búsqueda normal por nombre o código parcial (solo con stock)
+      productosFiltrados = productos
+        .filter(p => 
+          p.cantidad > 0 && (
+            p.nombre.toLowerCase().includes(textoBusquedaLower) ||
+            (p.codigoBarras && p.codigoBarras.toLowerCase().includes(textoBusquedaLower))
+          )
         )
-      )
-      .slice(0, 5); // Máximo 5 sugerencias
+        .slice(0, 5);
+    }
 
     setSugerencias(prev => ({ ...prev, [rowIndex]: productosFiltrados }));
-    setMostrarSugerencias(prev => ({ ...prev, [rowIndex]: productosFiltrados.length > 0 }));
+    setMostrarSugerencias(prev => ({ ...prev, [rowIndex]: productosFiltrados.length > 0 && !esCodigoBarras }));
     setBusqueda(prev => ({ ...prev, [rowIndex]: texto }));
   };
 
@@ -427,9 +454,8 @@ export default function Salidas() {
                             value={busqueda[index] || (item.producto ? productos.find(p => p._id === item.producto)?.nombre || '' : '')}
                             onChange={(e) => {
                               const texto = e.target.value;
-                              buscarProductos(texto, index);
-                              // Si el texto está vacío, limpiar el producto seleccionado
-                              if (!texto || texto.trim() === '') {
+                              // Limpiar el producto seleccionado cuando el usuario escribe
+                              if (items[index].producto && texto !== busqueda[index]) {
                                 const nuevosItems = [...items];
                                 nuevosItems[index] = { 
                                   ...nuevosItems[index], 
@@ -438,6 +464,7 @@ export default function Salidas() {
                                 };
                                 setItems(nuevosItems);
                               }
+                              buscarProductos(texto, index);
                             }}
                             onFocus={() => {
                               if (busqueda[index] || item.producto) {

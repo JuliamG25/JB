@@ -369,6 +369,17 @@ export default function Inventario() {
                     type="text"
                     value={formData.codigoBarras || ''}
                     onChange={(e) => setFormData({ ...formData, codigoBarras: e.target.value })}
+                    onKeyDown={(e) => {
+                      // Prevenir que Enter en código de barras cierre el modal
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        // Enfocar el siguiente campo o el botón de submit
+                        const submitButton = document.querySelector('button[type="submit"]') as HTMLButtonElement;
+                        if (submitButton) {
+                          submitButton.focus();
+                        }
+                      }
+                    }}
                     className="w-full px-4 py-2.5 border-2 border-purple-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 text-base font-medium placeholder-purple-300"
                     placeholder="Opcional"
                   />
