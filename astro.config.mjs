@@ -14,7 +14,9 @@ export default defineConfig({
   output: 'server',
   adapter: vercel({
     // Configuración para serverless functions
-    functionPerRoute: false,
+    // functionPerRoute: true permite que cada ruta tenga su propia función
+    // Esto puede ayudar con el routing en Vercel
+    functionPerRoute: true,
   }),
   vite: {
     optimizeDeps: {
