@@ -11,7 +11,12 @@ export const GET: APIRoute = async () => {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message }), {
+    console.error('❌ Error en GET /api/productos:', error);
+    const errorMessage = error?.message || 'Error desconocido al obtener productos';
+    return new Response(JSON.stringify({ 
+      error: errorMessage,
+      details: process.env.NODE_ENV === 'development' ? error?.stack : undefined
+    }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });

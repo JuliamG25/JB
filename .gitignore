@@ -11,6 +11,7 @@ pnpm-debug.log*
 dist/
 .output/
 .astro/
+.vercel/
 
 # environment variables
 .env
