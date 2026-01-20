@@ -7,6 +7,7 @@ interface Producto {
   precio: number;
   cantidad: number;
   costo: number;
+  codigoBarras?: string;
 }
 
 export default function Inventario() {
@@ -20,6 +21,7 @@ export default function Inventario() {
     precio: 0,
     cantidad: 0,
     costo: 0,
+    codigoBarras: '',
   });
 
   useEffect(() => {
@@ -133,7 +135,7 @@ export default function Inventario() {
   };
 
   const resetForm = () => {
-    setFormData({ nombre: '', precio: 0, cantidad: 0, costo: 0 });
+    setFormData({ nombre: '', precio: 0, cantidad: 0, costo: 0, codigoBarras: '' });
     setEditingProducto(null);
   };
 
@@ -236,7 +238,9 @@ export default function Inventario() {
                           </div>
                           <div>
                             <div className="text-base font-bold text-purple-900">{producto.nombre}</div>
-                            <div className="text-xs text-purple-500 font-medium">ID: {producto._id?.slice(-6)}</div>
+                            <div className="text-xs text-purple-500 font-medium">
+                              {producto.codigoBarras ? `Código: ${producto.codigoBarras}` : `ID: ${producto._id?.slice(-6)}`}
+                            </div>
                           </div>
                         </div>
                       </td>
@@ -353,12 +357,25 @@ export default function Inventario() {
                   placeholder="0"
                 />
               </div>
+              <div>
+                <label className="block text-base font-bold text-purple-800 mb-3 flex items-center space-x-2">
+                  <span>📊</span>
+                  <span>Código de Barras (Opcional)</span>
+                </label>
+                <input
+                  type="text"
+                  value={formData.codigoBarras || ''}
+                  onChange={(e) => setFormData({ ...formData, codigoBarras: e.target.value })}
+                  className="w-full px-5 py-4 border-2 border-purple-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 text-lg font-medium placeholder-purple-300"
+                  placeholder="Ej: 1234567890123"
+                />
+              </div>
               {formData.precio > 0 && formData.costo > 0 && (
                 <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-2xl p-4 shadow-lg">
                   <p className="text-base text-green-800 font-bold">
                     <span className="flex items-center space-x-2">
                       <span>✨</span>
-                      <span>Ganancia por unidad: ${(formData.precio - formData.costo).toFixed(2)} ({formData.costo > 0 ? (((formData.precio - formData.costo) / formData.costo) * 100).toFixed(1) : '0'}%)</span>
+                      <span>Ganancia por unidad: ${(formData.precio - formData.costo).toFixed(2)} | Rentabilidad: {formData.precio > 0 ? (((formData.precio - formData.costo) / formData.precio) * 100).toFixed(1) : '0'}%</span>
                     </span>
                   </p>
                 </div>

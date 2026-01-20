@@ -3,12 +3,31 @@ import connectDB from '../../lib/mongodb';
 import { Producto } from '../../models/Producto';
 import { Salida } from '../../models/Salida';
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ url }) => {
   try {
     await connectDB();
     
-    // Obtener todas las salidas (ventas) con productos poblados
-    const salidas = await Salida.find({})
+    // Obtener parámetros de fecha de la URL
+    const fechaInicio = url.searchParams.get('fechaInicio');
+    const fechaFin = url.searchParams.get('fechaFin');
+    
+    // Construir filtro de fechas
+    const filtroFecha: any = {};
+    if (fechaInicio || fechaFin) {
+      filtroFecha.fecha = {};
+      if (fechaInicio) {
+        filtroFecha.fecha.$gte = new Date(fechaInicio);
+      }
+      if (fechaFin) {
+        // Agregar un día completo para incluir el día final
+        const fechaFinCompleta = new Date(fechaFin);
+        fechaFinCompleta.setHours(23, 59, 59, 999);
+        filtroFecha.fecha.$lte = fechaFinCompleta;
+      }
+    }
+    
+    // Obtener salidas (ventas) con productos poblados, filtradas por fecha si se proporciona
+    const salidas = await Salida.find(filtroFecha)
       .populate('productos.producto', 'nombre precio costo')
       .lean();
     
@@ -88,8 +107,9 @@ export const GET: APIRoute = async () => {
         ? producto.gananciaTotal / producto.cantidadVendida 
         : 0;
       
-      const margenGanancia = producto.costo > 0 
-        ? ((gananciaPorUnidadPromedio / producto.costo) * 100).toFixed(2)
+      // Calcular rentabilidad: (precio - costo) / precio * 100
+      const rentabilidad = precioPromedio > 0 
+        ? (((precioPromedio - producto.costo) / precioPromedio) * 100).toFixed(2)
         : '0.00';
       
       return {
@@ -100,7 +120,7 @@ export const GET: APIRoute = async () => {
         cantidad: producto.cantidadVendida,
         gananciaPorUnidad: gananciaPorUnidadPromedio.toFixed(2),
         gananciaTotal: producto.gananciaTotal.toFixed(2),
-        margenGanancia: `${margenGanancia}%`,
+        rentabilidad: `${rentabilidad}%`,
       };
     });
     

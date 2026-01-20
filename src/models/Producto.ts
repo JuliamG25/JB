@@ -6,6 +6,7 @@ export interface IProducto {
   precio: number;
   cantidad: number;
   costo: number;
+  codigoBarras?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -31,6 +32,12 @@ const ProductoSchema = new Schema<IProducto>(
       type: Number,
       required: [true, 'El costo es requerido'],
       min: [0, 'El costo debe ser mayor o igual a 0'],
+    },
+    codigoBarras: {
+      type: String,
+      trim: true,
+      sparse: true, // Permite valores únicos pero permite null/undefined
+      index: true,
     },
   },
   {
