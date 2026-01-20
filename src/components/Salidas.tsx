@@ -29,6 +29,7 @@ export default function Salidas() {
   const [salidas, setSalidas] = useState<Salida[]>([]);
   const [productos, setProductos] = useState<Producto[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [items, setItems] = useState<ItemSalida[]>([]);
   const [fecha, setFecha] = useState(new Date().toISOString().split('T')[0]);
@@ -66,13 +67,36 @@ export default function Salidas() {
         fetch('/api/salidas'),
         fetch('/api/productos'),
       ]);
+      
+      if (!salidasRes.ok) {
+        const errorData = await salidasRes.json().catch(() => ({ error: `Error ${salidasRes.status}` }));
+        throw new Error(errorData.error || `Error al cargar salidas: ${salidasRes.status}`);
+      }
+      
+      if (!productosRes.ok) {
+        const errorData = await productosRes.json().catch(() => ({ error: `Error ${productosRes.status}` }));
+        throw new Error(errorData.error || `Error al cargar productos: ${productosRes.status}`);
+      }
+      
       const salidasData = await salidasRes.json();
       const productosData = await productosRes.json();
-      setSalidas(salidasData);
-      setProductos(productosData);
-    } catch (error) {
+      
+      // Verificar si hay errores en las respuestas
+      if (salidasData.error) {
+        throw new Error(salidasData.error);
+      }
+      if (productosData.error) {
+        throw new Error(productosData.error);
+      }
+      
+      setSalidas(Array.isArray(salidasData) ? salidasData : []);
+      setProductos(Array.isArray(productosData) ? productosData : []);
+      setError(null);
+    } catch (error: any) {
       console.error('Error al cargar datos:', error);
-      alert('Error al cargar datos');
+      setSalidas([]);
+      setProductos([]);
+      setError(error.message || 'Error desconocido al cargar datos');
     } finally {
       setLoading(false);
     }
@@ -139,6 +163,28 @@ export default function Salidas() {
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-600 mb-4"></div>
           <p className="text-gray-600 text-lg font-medium">Cargando salidas...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="text-center max-w-md">
+          <div className="text-6xl mb-4">⚠️</div>
+          <h3 className="text-2xl font-bold text-red-600 mb-2">Error al cargar datos</h3>
+          <p className="text-red-500 mb-4">{error}</p>
+          <button
+            onClick={() => {
+              setError(null);
+              setLoading(true);
+              cargarDatos();
+            }}
+            className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-xl font-bold hover:from-purple-700 hover:to-pink-700 transition-all"
+          >
+            Reintentar
+          </button>
         </div>
       </div>
     );

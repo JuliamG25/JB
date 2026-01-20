@@ -28,6 +28,7 @@ export default function Entradas() {
   const [entradas, setEntradas] = useState<Entrada[]>([]);
   const [productos, setProductos] = useState<Producto[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [items, setItems] = useState<ItemEntrada[]>([]);
   const [sugerencias, setSugerencias] = useState<{ [key: number]: Producto[] }>({});
@@ -83,13 +84,36 @@ export default function Entradas() {
         fetch('/api/entradas'),
         fetch('/api/productos'),
       ]);
+      
+      if (!entradasRes.ok) {
+        const errorData = await entradasRes.json().catch(() => ({ error: `Error ${entradasRes.status}` }));
+        throw new Error(errorData.error || `Error al cargar entradas: ${entradasRes.status}`);
+      }
+      
+      if (!productosRes.ok) {
+        const errorData = await productosRes.json().catch(() => ({ error: `Error ${productosRes.status}` }));
+        throw new Error(errorData.error || `Error al cargar productos: ${productosRes.status}`);
+      }
+      
       const entradasData = await entradasRes.json();
       const productosData = await productosRes.json();
-      setEntradas(entradasData);
-      setProductos(productosData);
-    } catch (error) {
+      
+      // Verificar si hay errores en las respuestas
+      if (entradasData.error) {
+        throw new Error(entradasData.error);
+      }
+      if (productosData.error) {
+        throw new Error(productosData.error);
+      }
+      
+      setEntradas(Array.isArray(entradasData) ? entradasData : []);
+      setProductos(Array.isArray(productosData) ? productosData : []);
+      setError(null);
+    } catch (error: any) {
       console.error('Error al cargar datos:', error);
-      alert('Error al cargar datos');
+      setEntradas([]);
+      setProductos([]);
+      setError(error.message || 'Error desconocido al cargar datos');
     } finally {
       setLoading(false);
     }
@@ -278,6 +302,28 @@ export default function Entradas() {
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-purple-600 mb-6"></div>
           <p className="text-purple-700 text-xl font-bold">Cargando entradas de belleza...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="text-center max-w-md">
+          <div className="text-6xl mb-4">⚠️</div>
+          <h3 className="text-2xl font-bold text-red-600 mb-2">Error al cargar datos</h3>
+          <p className="text-red-500 mb-4">{error}</p>
+          <button
+            onClick={() => {
+              setError(null);
+              setLoading(true);
+              cargarDatos();
+            }}
+            className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-xl font-bold hover:from-purple-700 hover:to-pink-700 transition-all"
+          >
+            Reintentar
+          </button>
         </div>
       </div>
     );

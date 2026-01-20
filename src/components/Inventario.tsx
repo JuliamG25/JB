@@ -12,6 +12,7 @@ interface Producto {
 export default function Inventario() {
   const [productos, setProductos] = useState<Producto[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [editingProducto, setEditingProducto] = useState<Producto | null>(null);
   const [formData, setFormData] = useState<Producto>({
@@ -52,11 +53,25 @@ export default function Inventario() {
   const cargarProductos = async () => {
     try {
       const res = await fetch('/api/productos');
+      
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ error: `Error ${res.status}: ${res.statusText}` }));
+        throw new Error(errorData.error || `Error al cargar productos: ${res.status} ${res.statusText}`);
+      }
+      
       const data = await res.json();
-      setProductos(data);
-    } catch (error) {
+      
+      // Verificar si la respuesta contiene un error
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      
+      setProductos(Array.isArray(data) ? data : []);
+      setError(null);
+    } catch (error: any) {
       console.error('Error al cargar productos:', error);
-      alert('Error al cargar productos');
+      setProductos([]);
+      setError(error.message || 'Error desconocido al cargar productos');
     } finally {
       setLoading(false);
     }
@@ -128,6 +143,28 @@ export default function Inventario() {
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-purple-600 mb-6"></div>
           <p className="text-purple-700 text-xl font-bold">Cargando productos de belleza...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="text-center max-w-md">
+          <div className="text-6xl mb-4">⚠️</div>
+          <h3 className="text-2xl font-bold text-red-600 mb-2">Error al cargar productos</h3>
+          <p className="text-red-500 mb-4">{error}</p>
+          <button
+            onClick={() => {
+              setError(null);
+              setLoading(true);
+              cargarProductos();
+            }}
+            className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-xl font-bold hover:from-purple-700 hover:to-pink-700 transition-all"
+          >
+            Reintentar
+          </button>
         </div>
       </div>
     );
