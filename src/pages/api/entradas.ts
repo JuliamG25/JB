@@ -8,12 +8,21 @@ export const GET: APIRoute = async () => {
     await connectDB();
     const entradas = await Entrada.find({})
       .populate('productos.producto', 'nombre precio costo')
-      .sort({ fecha: -1 });
-    return new Response(JSON.stringify(entradas), {
+      .sort({ fecha: -1 })
+      .lean();
+    
+    // Filtrar productos null y limpiar los datos
+    const entradasLimpias = entradas.map(entrada => ({
+      ...entrada,
+      productos: entrada.productos.filter((item: any) => item.producto !== null && item.producto !== undefined)
+    }));
+    
+    return new Response(JSON.stringify(entradasLimpias), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error: any) {
+    console.error('Error en GET /api/entradas:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },

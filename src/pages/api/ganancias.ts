@@ -25,15 +25,34 @@ export const GET: APIRoute = async () => {
     // Iterar sobre todas las salidas para acumular datos de productos vendidos
     for (const salida of salidas) {
       for (const item of salida.productos) {
-        const productoId = typeof item.producto === 'object' 
-          ? (item.producto as any)._id.toString()
-          : item.producto.toString();
+        // Validar que item.producto no sea null o undefined
+        if (!item.producto) {
+          console.warn('Producto null encontrado en salida:', salida._id);
+          continue; // Saltar este item si el producto no existe
+        }
         
-        if (typeof item.producto === 'object') {
+        const productoId = typeof item.producto === 'object' 
+          ? (item.producto as any)?._id?.toString()
+          : item.producto?.toString();
+        
+        // Validar que productoId existe
+        if (!productoId) {
+          console.warn('Producto ID no válido en salida:', salida._id);
+          continue;
+        }
+        
+        if (typeof item.producto === 'object' && item.producto !== null) {
           const producto = item.producto as any;
-          const precioVenta = item.precio;
+          
+          // Validar que el producto tenga las propiedades necesarias
+          if (!producto._id || !producto.nombre) {
+            console.warn('Producto incompleto en salida:', salida._id);
+            continue;
+          }
+          
+          const precioVenta = item.precio || 0;
           const costo = producto.costo || 0;
-          const cantidadVendida = item.cantidad;
+          const cantidadVendida = item.cantidad || 0;
           const gananciaPorUnidad = precioVenta - costo;
           const gananciaTotal = gananciaPorUnidad * cantidadVendida;
           
@@ -46,7 +65,7 @@ export const GET: APIRoute = async () => {
           } else {
             productosVendidos.set(productoId, {
               _id: productoId,
-              nombre: producto.nombre,
+              nombre: producto.nombre || 'Producto sin nombre',
               precioVentaTotal: precioVenta * cantidadVendida,
               costo: costo,
               cantidadVendida: cantidadVendida,
