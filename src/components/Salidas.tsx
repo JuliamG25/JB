@@ -7,6 +7,7 @@ interface Producto {
   precio: number;
   costo: number;
   cantidad: number;
+  codigoBarras?: string;
 }
 
 interface ItemSalida {
@@ -131,9 +132,14 @@ export default function Salidas() {
     }
 
     const textoBusqueda = texto.toLowerCase().trim();
-    // Filtrar solo productos con stock disponible
+    // Filtrar solo productos con stock disponible, buscar por nombre o código de barras
     const productosFiltrados = productos
-      .filter(p => p.cantidad > 0 && p.nombre.toLowerCase().includes(textoBusqueda))
+      .filter(p => 
+        p.cantidad > 0 && (
+          p.nombre.toLowerCase().includes(textoBusqueda) ||
+          (p.codigoBarras && p.codigoBarras.toLowerCase().includes(textoBusqueda))
+        )
+      )
       .slice(0, 5); // Máximo 5 sugerencias
 
     setSugerencias(prev => ({ ...prev, [rowIndex]: productosFiltrados }));
@@ -462,6 +468,7 @@ export default function Salidas() {
                                   <div className="font-bold text-purple-900">{producto.nombre}</div>
                                   <div className="text-sm text-purple-600 mt-1">
                                     Stock: {producto.cantidad} | Precio: ${producto.precio.toFixed(2)}
+                                    {producto.codigoBarras && ` | Código: ${producto.codigoBarras}`}
                                   </div>
                                 </div>
                               ))}

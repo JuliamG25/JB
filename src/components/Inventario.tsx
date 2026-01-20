@@ -287,17 +287,17 @@ export default function Inventario() {
       )}
 
       {showModal && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fadeIn">
-          <div className="bg-white/95 backdrop-blur-lg rounded-3xl shadow-2xl w-full max-w-lg transform transition-all animate-slideUp border-2 border-purple-200/50">
-            <div className="bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 px-8 py-6 rounded-t-3xl border-b-2 border-purple-400/30">
-              <h3 className="text-3xl font-bold text-white flex items-center space-x-3">
-                <span className="text-4xl">{editingProducto ? '✨' : '💄'}</span>
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fadeIn overflow-y-auto">
+          <div className="bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl w-full max-w-md my-4 transform transition-all animate-slideUp border-2 border-purple-200/50">
+            <div className="bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 px-6 py-4 rounded-t-2xl border-b-2 border-purple-400/30">
+              <h3 className="text-2xl font-bold text-white flex items-center space-x-2">
+                <span className="text-3xl">{editingProducto ? '✨' : '💄'}</span>
                 <span>{editingProducto ? 'Editar Producto' : 'Nuevo Producto'}</span>
               </h3>
             </div>
-            <form onSubmit={handleSubmit} className="p-8 space-y-6">
+            <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[calc(100vh-200px)] overflow-y-auto">
               <div>
-                <label className="block text-base font-bold text-purple-800 mb-3 flex items-center space-x-2">
+                <label className="block text-sm font-bold text-purple-800 mb-2 flex items-center space-x-2">
                   <span>💋</span>
                   <span>Nombre del Producto</span>
                 </label>
@@ -306,94 +306,98 @@ export default function Inventario() {
                   required
                   value={formData.nombre}
                   onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
-                  className="w-full px-5 py-4 border-2 border-purple-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 text-lg font-medium placeholder-purple-300"
+                  className="w-full px-4 py-2.5 border-2 border-purple-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 text-base font-medium placeholder-purple-300"
                   placeholder="Ej: Labial Rojo Premium"
                 />
               </div>
-              <div>
-                <label className="block text-base font-bold text-purple-800 mb-3 flex items-center space-x-2">
-                  <span>💰</span>
-                  <span>Precio de Venta ($)</span>
-                </label>
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  required
-                  value={formData.precio}
-                  onChange={(e) => setFormData({ ...formData, precio: parseFloat(e.target.value) || 0 })}
-                  className="w-full px-5 py-4 border-2 border-green-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-green-300 focus:border-green-500 transition-all duration-300 text-lg font-medium placeholder-green-300"
-                  placeholder="0.00"
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-purple-800 mb-2 flex items-center space-x-2">
+                    <span>💰</span>
+                    <span>Precio ($)</span>
+                  </label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    required
+                    value={formData.precio}
+                    onChange={(e) => setFormData({ ...formData, precio: parseFloat(e.target.value) || 0 })}
+                    className="w-full px-4 py-2.5 border-2 border-green-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-300 focus:border-green-500 transition-all duration-300 text-base font-medium placeholder-green-300"
+                    placeholder="0.00"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-purple-800 mb-2 flex items-center space-x-2">
+                    <span>📊</span>
+                    <span>Costo ($)</span>
+                  </label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    required
+                    value={formData.costo}
+                    onChange={(e) => setFormData({ ...formData, costo: parseFloat(e.target.value) || 0 })}
+                    className="w-full px-4 py-2.5 border-2 border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-500 transition-all duration-300 text-base font-medium placeholder-pink-300"
+                    placeholder="0.00"
+                  />
+                </div>
               </div>
-              <div>
-                <label className="block text-base font-bold text-purple-800 mb-3 flex items-center space-x-2">
-                  <span>📊</span>
-                  <span>Costo ($)</span>
-                </label>
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  required
-                  value={formData.costo}
-                  onChange={(e) => setFormData({ ...formData, costo: parseFloat(e.target.value) || 0 })}
-                  className="w-full px-5 py-4 border-2 border-pink-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-pink-300 focus:border-pink-500 transition-all duration-300 text-lg font-medium placeholder-pink-300"
-                  placeholder="0.00"
-                />
-              </div>
-              <div>
-                <label className="block text-base font-bold text-purple-800 mb-3 flex items-center space-x-2">
-                  <span>📦</span>
-                  <span>Cantidad Inicial</span>
-                </label>
-                <input
-                  type="number"
-                  min="0"
-                  required
-                  value={formData.cantidad}
-                  onChange={(e) => setFormData({ ...formData, cantidad: parseInt(e.target.value) || 0 })}
-                  className="w-full px-5 py-4 border-2 border-purple-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 text-lg font-medium placeholder-purple-300"
-                  placeholder="0"
-                />
-              </div>
-              <div>
-                <label className="block text-base font-bold text-purple-800 mb-3 flex items-center space-x-2">
-                  <span>📊</span>
-                  <span>Código de Barras (Opcional)</span>
-                </label>
-                <input
-                  type="text"
-                  value={formData.codigoBarras || ''}
-                  onChange={(e) => setFormData({ ...formData, codigoBarras: e.target.value })}
-                  className="w-full px-5 py-4 border-2 border-purple-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 text-lg font-medium placeholder-purple-300"
-                  placeholder="Ej: 1234567890123"
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-purple-800 mb-2 flex items-center space-x-2">
+                    <span>📦</span>
+                    <span>Cantidad</span>
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    required
+                    value={formData.cantidad}
+                    onChange={(e) => setFormData({ ...formData, cantidad: parseInt(e.target.value) || 0 })}
+                    className="w-full px-4 py-2.5 border-2 border-purple-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 text-base font-medium placeholder-purple-300"
+                    placeholder="0"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-purple-800 mb-2 flex items-center space-x-2">
+                    <span>📊</span>
+                    <span>Código Barras</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.codigoBarras || ''}
+                    onChange={(e) => setFormData({ ...formData, codigoBarras: e.target.value })}
+                    className="w-full px-4 py-2.5 border-2 border-purple-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 text-base font-medium placeholder-purple-300"
+                    placeholder="Opcional"
+                  />
+                </div>
               </div>
               {formData.precio > 0 && formData.costo > 0 && (
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-2xl p-4 shadow-lg">
-                  <p className="text-base text-green-800 font-bold">
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-xl p-3 shadow-lg">
+                  <p className="text-sm text-green-800 font-bold">
                     <span className="flex items-center space-x-2">
                       <span>✨</span>
-                      <span>Ganancia por unidad: ${(formData.precio - formData.costo).toFixed(2)} | Rentabilidad: {formData.precio > 0 ? (((formData.precio - formData.costo) / formData.precio) * 100).toFixed(1) : '0'}%</span>
+                      <span>Ganancia: ${(formData.precio - formData.costo).toFixed(2)} | Rentabilidad: {formData.precio > 0 ? (((formData.precio - formData.costo) / formData.precio) * 100).toFixed(1) : '0'}%</span>
                     </span>
                   </p>
                 </div>
               )}
-              <div className="flex justify-end space-x-4 pt-6 border-t-2 border-purple-100">
+              <div className="flex justify-end space-x-3 pt-4 border-t-2 border-purple-100">
                 <button
                   type="button"
                   onClick={() => {
                     setShowModal(false);
                     resetForm();
                   }}
-                  className="px-8 py-4 border-2 border-purple-300 rounded-2xl text-purple-700 font-bold hover:bg-purple-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                  className="px-6 py-2.5 border-2 border-purple-300 rounded-xl text-purple-700 font-bold hover:bg-purple-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 text-sm"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="px-8 py-4 bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 text-white rounded-2xl font-bold hover:from-purple-700 hover:via-pink-600 hover:to-fuchsia-700 transition-all duration-300 shadow-2xl hover:shadow-purple-500/50 transform hover:scale-110 flex items-center space-x-2"
+                  className="px-6 py-2.5 bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 text-white rounded-xl font-bold hover:from-purple-700 hover:via-pink-600 hover:to-fuchsia-700 transition-all duration-300 shadow-2xl hover:shadow-purple-500/50 transform hover:scale-110 flex items-center space-x-2 text-sm"
                 >
                   <span>{editingProducto ? '💾' : '✨'}</span>
                   <span>{editingProducto ? 'Actualizar' : 'Crear'}</span>

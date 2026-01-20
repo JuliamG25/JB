@@ -6,6 +6,8 @@ interface Producto {
   nombre: string;
   precio: number;
   costo: number;
+  cantidad: number;
+  codigoBarras?: string;
 }
 
 interface ItemEntrada {
@@ -128,7 +130,8 @@ export default function Entradas() {
 
     const textoBusqueda = texto.toLowerCase().trim();
     const productosFiltrados = productos.filter(p => 
-      p.nombre.toLowerCase().includes(textoBusqueda)
+      p.nombre.toLowerCase().includes(textoBusqueda) ||
+      (p.codigoBarras && p.codigoBarras.toLowerCase().includes(textoBusqueda))
     ).slice(0, 5); // Máximo 5 sugerencias
 
     setSugerencias(prev => ({ ...prev, [rowIndex]: productosFiltrados }));
@@ -538,9 +541,10 @@ export default function Entradas() {
                                 className="px-4 py-3 hover:bg-gradient-to-r hover:from-purple-50 hover:via-pink-50 hover:to-fuchsia-50 cursor-pointer transition-all duration-200 border-b border-purple-100 last:border-b-0 focus:outline-none focus:bg-gradient-to-r focus:from-purple-100 focus:via-pink-100 focus:to-fuchsia-100"
                               >
                                 <div className="font-bold text-purple-900">{producto.nombre}</div>
-                                {producto.costo > 0 && (
-                                  <div className="text-sm text-purple-600 mt-1">Costo: ${producto.costo.toFixed(2)}</div>
-                                )}
+                                <div className="text-sm text-purple-600 mt-1 flex items-center space-x-2">
+                                  {producto.costo > 0 && <span>Costo: ${producto.costo.toFixed(2)}</span>}
+                                  {producto.codigoBarras && <span>• Código: {producto.codigoBarras}</span>}
+                                </div>
                               </div>
                             ))}
                           </div>
