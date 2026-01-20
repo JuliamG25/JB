@@ -1,13 +1,5 @@
 import mongoose from 'mongoose';
 
-// Connection String desde MongoDB Atlas
-// Reemplaza <db_username> y <db_password> con tus credenciales reales en el archivo .env
-const MONGODB_URI = import.meta.env.MONGODB_URI || 'mongodb+srv://<db_username>:<db_password>@db1.3enraoz.mongodb.net/inventario?retryWrites=true&w=majority&appName=db1';
-
-if (!MONGODB_URI || MONGODB_URI.includes('<db_username>') || MONGODB_URI.includes('<db_password>')) {
-  throw new Error('Por favor define la variable MONGODB_URI en el archivo .env con tu usuario y contraseña reales');
-}
-
 // Opciones del cliente para la API estable de MongoDB
 const clientOptions = {
   serverApi: {
@@ -17,6 +9,19 @@ const clientOptions = {
   },
   bufferCommands: false,
 };
+
+// Función para obtener la URI de MongoDB en tiempo de ejecución
+// En Astro con SSR, import.meta.env está disponible en runtime
+// En Vercel, las variables de entorno se pasan como import.meta.env
+function getMongoDBUri(): string {
+  // En Astro con SSR, import.meta.env está disponible en runtime
+  // En Vercel, las variables de entorno se pasan como import.meta.env
+  const uri = import.meta.env.MONGODB_URI || 
+    (typeof process !== 'undefined' && process.env ? process.env.MONGODB_URI : undefined) ||
+    'mongodb+srv://<db_username>:<db_password>@db1.3enraoz.mongodb.net/inventario?retryWrites=true&w=majority&appName=db1';
+  
+  return uri;
+}
 
 interface MongooseCache {
   conn: typeof mongoose | null;
@@ -44,6 +49,19 @@ async function connectDB(): Promise<typeof mongoose> {
   }
 
   if (!cached.promise) {
+    const MONGODB_URI = getMongoDBUri();
+    
+    // Validar en tiempo de ejecución (cuando realmente se necesita la conexión)
+    if (!MONGODB_URI || MONGODB_URI.includes('<db_username>') || MONGODB_URI.includes('<db_password>')) {
+      const errorMessage = 'MONGODB_URI no está configurada correctamente.\n\n' +
+        'Por favor configura la variable de entorno MONGODB_URI en Vercel:\n' +
+        '1. Ve a Settings → Environment Variables\n' +
+        '2. Agrega la variable MONGODB_URI con tu connection string de MongoDB Atlas\n' +
+        '3. Selecciona todos los ambientes (Production, Preview, Development)\n' +
+        '4. Haz un nuevo despliegue';
+      throw new Error(errorMessage);
+    }
+    
     cached.promise = mongoose.connect(MONGODB_URI, clientOptions).then(async (mongoose) => {
       // Verificar la conexión con un ping
       try {
