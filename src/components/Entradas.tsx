@@ -1,4 +1,4 @@
-import { useState, useEffect, type FormEvent } from 'react';
+import { useState, useEffect, useRef, type FormEvent } from 'react';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 
 interface Producto {
@@ -41,6 +41,17 @@ export default function Entradas() {
   useEffect(() => {
     cargarDatos();
   }, []);
+
+  // Limpiar timeouts cuando se cierra el modal
+  useEffect(() => {
+    if (!showModal) {
+      // Limpiar todos los timeouts pendientes
+      Object.values(seleccionAutomaticaRef.current).forEach(timeout => {
+        if (timeout) clearTimeout(timeout);
+      });
+      seleccionAutomaticaRef.current = {};
+    }
+  }, [showModal]);
 
   // Inicializar con un renglón vacío cuando se abre el modal
   useEffect(() => {
@@ -121,8 +132,16 @@ export default function Entradas() {
     }
   };
 
+  // Referencia para evitar múltiples selecciones automáticas
+  const seleccionAutomaticaRef = useRef<{ [key: number]: NodeJS.Timeout | null }>({});
+
   const buscarProductos = (texto: string, rowIndex: number) => {
     if (!texto || texto.trim() === '') {
+      // Limpiar timeout si existe
+      if (seleccionAutomaticaRef.current[rowIndex]) {
+        clearTimeout(seleccionAutomaticaRef.current[rowIndex]!);
+        seleccionAutomaticaRef.current[rowIndex] = null;
+      }
       setSugerencias(prev => ({ ...prev, [rowIndex]: [] }));
       setMostrarSugerencias(prev => ({ ...prev, [rowIndex]: false }));
       setBusqueda(prev => ({ ...prev, [rowIndex]: '' }));
@@ -132,12 +151,17 @@ export default function Entradas() {
     const textoBusqueda = texto.trim();
     const textoBusquedaLower = textoBusqueda.toLowerCase();
     
-    // Detectar si es un código de barras (solo números, 8-13 dígitos)
-    const esCodigoBarras = /^\d{8,13}$/.test(textoBusqueda);
+    // Detectar si es un código de barras COMPLETO (solo números, 8-13 dígitos)
+    const esCodigoBarrasCompleto = /^\d{8,13}$/.test(textoBusqueda);
     
     let productosFiltrados: Producto[] = [];
     
-    if (esCodigoBarras) {
+    if (esCodigoBarrasCompleto) {
+      // Limpiar timeout anterior si existe
+      if (seleccionAutomaticaRef.current[rowIndex]) {
+        clearTimeout(seleccionAutomaticaRef.current[rowIndex]!);
+      }
+      
       // Buscar coincidencia exacta por código de barras
       const productoExacto = productos.find(p => 
         p.codigoBarras && p.codigoBarras === textoBusqueda
@@ -145,16 +169,38 @@ export default function Entradas() {
       
       if (productoExacto) {
         productosFiltrados = [productoExacto];
-        // Auto-seleccionar si hay coincidencia exacta
-        setTimeout(() => {
-          seleccionarProducto(rowIndex, productoExacto);
-        }, 100);
+        // Auto-seleccionar solo después de un pequeño delay para asegurar que el código está completo
+        seleccionAutomaticaRef.current[rowIndex] = setTimeout(() => {
+          // Verificar que el texto actual del input coincida (usar el valor actual del estado)
+          const inputElement = document.querySelector(`[data-row="${rowIndex}"][data-field="producto"]`) as HTMLInputElement;
+          if (inputElement && inputElement.value.trim() === textoBusqueda) {
+            seleccionarProducto(rowIndex, productoExacto);
+          }
+          seleccionAutomaticaRef.current[rowIndex] = null;
+        }, 300);
       } else {
-        // No se encontró el código de barras
+        // No se encontró el código de barras - solo mostrar error si el código está completo
         productosFiltrados = [];
-        alert(`⚠️ Producto con código de barras "${textoBusqueda}" no encontrado`);
+        // Usar un delay para evitar múltiples alerts durante el escaneo
+        if (seleccionAutomaticaRef.current[rowIndex]) {
+          clearTimeout(seleccionAutomaticaRef.current[rowIndex]!);
+        }
+        seleccionAutomaticaRef.current[rowIndex] = setTimeout(() => {
+          // Verificar que el texto actual del input coincida
+          const inputElement = document.querySelector(`[data-row="${rowIndex}"][data-field="producto"]`) as HTMLInputElement;
+          if (inputElement && inputElement.value.trim() === textoBusqueda) {
+            alert(`⚠️ Producto con código de barras "${textoBusqueda}" no encontrado`);
+          }
+          seleccionAutomaticaRef.current[rowIndex] = null;
+        }, 300);
       }
     } else {
+      // Limpiar timeout si existe
+      if (seleccionAutomaticaRef.current[rowIndex]) {
+        clearTimeout(seleccionAutomaticaRef.current[rowIndex]!);
+        seleccionAutomaticaRef.current[rowIndex] = null;
+      }
+      
       // Búsqueda normal por nombre o código parcial
       productosFiltrados = productos.filter(p => 
         p.nombre.toLowerCase().includes(textoBusquedaLower) ||
@@ -163,7 +209,7 @@ export default function Entradas() {
     }
 
     setSugerencias(prev => ({ ...prev, [rowIndex]: productosFiltrados }));
-    setMostrarSugerencias(prev => ({ ...prev, [rowIndex]: productosFiltrados.length > 0 && !esCodigoBarras }));
+    setMostrarSugerencias(prev => ({ ...prev, [rowIndex]: productosFiltrados.length > 0 && !esCodigoBarrasCompleto }));
     setBusqueda(prev => ({ ...prev, [rowIndex]: texto }));
   };
 
