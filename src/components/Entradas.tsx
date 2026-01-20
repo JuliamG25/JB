@@ -148,45 +148,16 @@ export default function Entradas() {
     setSugerencias(prev => ({ ...prev, [rowIndex]: [] }));
     setMostrarSugerencias(prev => ({ ...prev, [rowIndex]: false }));
 
-    // Si todos los campos del renglón están completos y es el último renglón, agregar uno nuevo
-    const itemActualizado = nuevosItems[rowIndex];
-    const estaCompleto = itemActualizado.producto && itemActualizado.cantidad > 0 && itemActualizado.costo >= 0;
-    const esUltimoRenglon = rowIndex === nuevosItems.length - 1;
-    
-    if (estaCompleto && esUltimoRenglon) {
-      if (!nuevosItems[rowIndex + 1]) {
-        nuevosItems.push({ producto: '', cantidad: 1, costo: 0 });
-        setItems(nuevosItems);
-        // Enfocar el siguiente campo después de un breve delay
-        setTimeout(() => {
-          const nextInput = document.querySelector(`[data-row="${rowIndex}"][data-field="cantidad"]`) as HTMLInputElement;
-          nextInput?.focus();
-        }, 100);
-      }
-    } else {
-      // Si no está completo, enfocar el siguiente campo
-      setTimeout(() => {
-        const nextInput = document.querySelector(`[data-row="${rowIndex}"][data-field="cantidad"]`) as HTMLInputElement;
-        nextInput?.focus();
-      }, 100);
-    }
+    // Enfocar el siguiente campo (cantidad)
+    setTimeout(() => {
+      const nextInput = document.querySelector(`[data-row="${rowIndex}"][data-field="cantidad"]`) as HTMLInputElement;
+      nextInput?.focus();
+    }, 100);
   };
 
   const actualizarItem = (index: number, campo: keyof ItemEntrada, valor: any) => {
     const nuevosItems = [...items];
     nuevosItems[index] = { ...nuevosItems[index], [campo]: valor };
-    
-    // Si todos los campos del renglón están completos y es el último renglón, agregar uno nuevo
-    const itemActualizado = nuevosItems[index];
-    const estaCompleto = itemActualizado.producto && itemActualizado.cantidad > 0 && itemActualizado.costo >= 0;
-    const esUltimoRenglon = index === nuevosItems.length - 1;
-    
-    if (estaCompleto && esUltimoRenglon && campo === 'costo') {
-      // Agregar un nuevo renglón vacío solo si el último está completo y aún no existe otro
-      if (!nuevosItems[index + 1]) {
-        nuevosItems.push({ producto: '', cantidad: 1, costo: 0 });
-      }
-    }
     
     setItems(nuevosItems);
   };
@@ -450,20 +421,40 @@ export default function Entradas() {
               </div>
 
               <div>
-                <label className="block text-base font-bold text-purple-800 mb-4 flex items-center space-x-2">
-                  <span>📦</span>
-                  <span>Productos</span>
-                </label>
+                <div className="flex justify-between items-center mb-4">
+                  <label className="block text-base font-bold text-purple-800 flex items-center space-x-2">
+                    <span>📦</span>
+                    <span>Productos</span>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const nuevoIndex = items.length;
+                      setItems([...items, { producto: '', cantidad: 1, costo: 0 }]);
+                      setBusqueda(prev => ({ ...prev, [nuevoIndex]: '' }));
+                      setTimeout(() => {
+                        const newInput = document.querySelector(`[data-row="${nuevoIndex}"][data-field="producto"]`) as HTMLInputElement;
+                        newInput?.focus();
+                      }, 100);
+                    }}
+                    className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110 font-bold flex items-center space-x-2"
+                  >
+                    <span className="text-xl">✨</span>
+                    <span>Agregar Producto</span>
+                  </button>
+                </div>
 
                 <div className="space-y-3">
                   {/* Encabezado de la tabla */}
-                  <div className="grid grid-cols-12 gap-3 px-4 py-3 bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500 rounded-xl text-white font-bold text-sm">
-                    <div className="col-span-5">💋 Producto</div>
-                    <div className="col-span-2">📦 Cantidad</div>
-                    <div className="col-span-2">💰 Costo</div>
-                    <div className="col-span-2">✨ Subtotal</div>
-                    <div className="col-span-1 text-center">🗑️</div>
-                  </div>
+                  {items.length > 0 && (
+                    <div className="grid grid-cols-12 gap-3 px-4 py-3 bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500 rounded-xl text-white font-bold text-sm">
+                      <div className="col-span-5">💋 Producto</div>
+                      <div className="col-span-2">📦 Cantidad</div>
+                      <div className="col-span-2">💰 Costo</div>
+                      <div className="col-span-2">✨ Subtotal</div>
+                      <div className="col-span-1 text-center">🗑️</div>
+                    </div>
+                  )}
 
                   {/* Renglones de productos */}
                   {items.map((item, index) => (
@@ -593,16 +584,14 @@ export default function Entradas() {
                         </span>
                       </div>
                       <div className="col-span-1 flex items-center justify-center">
-                        {items.length > 1 && (
-                          <button
-                            type="button"
-                            onClick={() => eliminarItem(index)}
-                            className="text-red-500 hover:text-red-700 transition-colors duration-200 text-xl font-bold"
-                            title="Eliminar renglón"
-                          >
-                            🗑️
-                          </button>
-                        )}
+                        <button
+                          type="button"
+                          onClick={() => eliminarItem(index)}
+                          className="text-red-500 hover:text-red-700 transition-colors duration-200 text-xl font-bold"
+                          title="Eliminar renglón"
+                        >
+                          🗑️
+                        </button>
                       </div>
                     </div>
                   ))}

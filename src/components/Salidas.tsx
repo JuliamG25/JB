@@ -32,6 +32,9 @@ export default function Salidas() {
   const [error, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [items, setItems] = useState<ItemSalida[]>([]);
+  const [sugerencias, setSugerencias] = useState<{ [key: number]: Producto[] }>({});
+  const [mostrarSugerencias, setMostrarSugerencias] = useState<{ [key: number]: boolean }>({});
+  const [busqueda, setBusqueda] = useState<{ [key: number]: string }>({});
   const [fecha, setFecha] = useState(new Date().toISOString().split('T')[0]);
 
   useEffect(() => {
@@ -55,6 +58,9 @@ export default function Salidas() {
         if (showModal) {
           setShowModal(false);
           setItems([]);
+          setBusqueda({});
+          setSugerencias({});
+          setMostrarSugerencias({});
         }
       },
       description: 'Cerrar modal',
@@ -102,22 +108,72 @@ export default function Salidas() {
     }
   };
 
+  // Inicializar con un renglón vacío cuando se abre el modal
+  useEffect(() => {
+    if (showModal) {
+      if (items.length === 0) {
+        setItems([{ producto: '', cantidad: 1, precio: 0 }]);
+        setBusqueda({ 0: '' });
+      }
+      // Enfocar el primer campo del primer renglón cuando se abre el modal
+      setTimeout(() => {
+        const firstInput = document.querySelector('[data-row="0"][data-field="producto"]') as HTMLInputElement;
+        firstInput?.focus();
+      }, 100);
+    }
+  }, [showModal]);
+
+  const buscarProductos = (texto: string, rowIndex: number) => {
+    if (!texto || texto.trim() === '') {
+      setSugerencias(prev => ({ ...prev, [rowIndex]: [] }));
+      setMostrarSugerencias(prev => ({ ...prev, [rowIndex]: false }));
+      return;
+    }
+
+    const textoBusqueda = texto.toLowerCase().trim();
+    // Filtrar solo productos con stock disponible
+    const productosFiltrados = productos
+      .filter(p => p.cantidad > 0 && p.nombre.toLowerCase().includes(textoBusqueda))
+      .slice(0, 5); // Máximo 5 sugerencias
+
+    setSugerencias(prev => ({ ...prev, [rowIndex]: productosFiltrados }));
+    setMostrarSugerencias(prev => ({ ...prev, [rowIndex]: productosFiltrados.length > 0 }));
+    setBusqueda(prev => ({ ...prev, [rowIndex]: texto }));
+  };
+
+  const seleccionarProducto = (rowIndex: number, producto: Producto) => {
+    const nuevosItems = [...items];
+    nuevosItems[rowIndex] = { 
+      ...nuevosItems[rowIndex], 
+      producto: producto._id,
+      precio: producto.precio || 0
+    };
+    setItems(nuevosItems);
+    setBusqueda(prev => ({ ...prev, [rowIndex]: producto.nombre }));
+    setSugerencias(prev => ({ ...prev, [rowIndex]: [] }));
+    setMostrarSugerencias(prev => ({ ...prev, [rowIndex]: false }));
+    
+    // Enfocar el siguiente campo (cantidad)
+    setTimeout(() => {
+      const nextInput = document.querySelector(`[data-row="${rowIndex}"][data-field="cantidad"]`) as HTMLInputElement;
+      nextInput?.focus();
+    }, 100);
+  };
+
   const agregarItem = () => {
+    const nuevoIndex = items.length;
     setItems([...items, { producto: '', cantidad: 1, precio: 0 }]);
+    setBusqueda(prev => ({ ...prev, [nuevoIndex]: '' }));
+    // Enfocar el nuevo campo de producto
+    setTimeout(() => {
+      const newInput = document.querySelector(`[data-row="${nuevoIndex}"][data-field="producto"]`) as HTMLInputElement;
+      newInput?.focus();
+    }, 100);
   };
 
   const actualizarItem = (index: number, campo: keyof ItemSalida, valor: any) => {
     const nuevosItems = [...items];
     nuevosItems[index] = { ...nuevosItems[index], [campo]: valor };
-    
-    // Si cambió el producto, actualizar el precio automáticamente
-    if (campo === 'producto' && valor) {
-      const producto = productos.find((p) => p._id === valor);
-      if (producto) {
-        nuevosItems[index].precio = producto.precio;
-      }
-    }
-    
     setItems(nuevosItems);
   };
 
@@ -146,6 +202,9 @@ export default function Salidas() {
         cargarDatos();
         setShowModal(false);
         setItems([]);
+        setBusqueda({});
+        setSugerencias({});
+        setMostrarSugerencias({});
         setFecha(new Date().toISOString().split('T')[0]);
       } else {
         const error = await res.json();
@@ -333,35 +392,83 @@ export default function Salidas() {
                   </div>
                 )}
 
-                {items.map((item, index) => {
-                  const productoSeleccionado = productos.find((p) => p._id === item.producto);
-                  const stockDisponible = productoSeleccionado?.cantidad || 0;
+                <div className="space-y-3">
+                  {/* Encabezado de la tabla */}
+                  {items.length > 0 && (
+                    <div className="grid grid-cols-12 gap-3 px-4 py-3 bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500 rounded-xl text-white font-bold text-sm">
+                      <div className="col-span-4">💋 Producto</div>
+                      <div className="col-span-2">📦 Cantidad</div>
+                      <div className="col-span-2">💰 Precio</div>
+                      <div className="col-span-2">✨ Subtotal</div>
+                      <div className="col-span-2 text-center">🗑️</div>
+                    </div>
+                  )}
 
-                  return (
-                    <div key={index} className="p-6 bg-gradient-to-r from-purple-50 via-pink-50 to-fuchsia-50 border-2 border-purple-200 rounded-2xl mb-4 hover:shadow-xl transition-all duration-300">
-                      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div className="md:col-span-1">
-                          <label className="block text-sm font-bold text-purple-800 mb-2">💋 Producto</label>
-                          <select
+                  {/* Renglones de productos */}
+                  {items.map((item, index) => {
+                    const productoSeleccionado = productos.find((p) => p._id === item.producto);
+                    const stockDisponible = productoSeleccionado?.cantidad || 0;
+
+                    return (
+                      <div 
+                        key={index} 
+                        className="grid grid-cols-12 gap-3 p-4 bg-gradient-to-r from-purple-50 via-pink-50 to-fuchsia-50 border-2 border-purple-200 rounded-xl hover:shadow-lg transition-all duration-300"
+                      >
+                        <div className="col-span-4 relative">
+                          <input
+                            type="text"
                             required
-                            value={item.producto}
-                            onChange={(e) => actualizarItem(index, 'producto', e.target.value)}
-                            className="w-full px-4 py-3 text-base border-2 border-purple-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium"
-                          >
-                            <option value="">Seleccionar...</option>
-                            {productos
-                              .filter((p) => p.cantidad > 0)
-                              .map((p) => (
-                                <option key={p._id} value={p._id}>
-                                  {p.nombre} (Stock: {p.cantidad})
-                                </option>
+                            value={busqueda[index] || (item.producto ? productos.find(p => p._id === item.producto)?.nombre || '' : '')}
+                            onChange={(e) => {
+                              const texto = e.target.value;
+                              buscarProductos(texto, index);
+                              // Si el texto está vacío, limpiar el producto seleccionado
+                              if (!texto || texto.trim() === '') {
+                                const nuevosItems = [...items];
+                                nuevosItems[index] = { 
+                                  ...nuevosItems[index], 
+                                  producto: '',
+                                  precio: 0
+                                };
+                                setItems(nuevosItems);
+                              }
+                            }}
+                            onFocus={() => {
+                              if (busqueda[index] || item.producto) {
+                                buscarProductos(busqueda[index] || productos.find(p => p._id === item.producto)?.nombre || '', index);
+                              }
+                            }}
+                            onBlur={() => {
+                              setTimeout(() => {
+                                setMostrarSugerencias(prev => ({ ...prev, [index]: false }));
+                              }, 200);
+                            }}
+                            data-row={index}
+                            data-field="producto"
+                            className="w-full px-4 py-2.5 text-base border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
+                            placeholder="Buscar producto..."
+                            autoComplete="off"
+                          />
+                          
+                          {/* Sugerencias */}
+                          {mostrarSugerencias[index] && sugerencias[index] && sugerencias[index].length > 0 && (
+                            <div className="absolute z-50 w-full mt-1 bg-white border-2 border-purple-200 rounded-lg shadow-2xl max-h-60 overflow-y-auto">
+                              {sugerencias[index].map((producto, idx) => (
+                                <div
+                                  key={producto._id}
+                                  onClick={() => seleccionarProducto(index, producto)}
+                                  className="px-4 py-3 hover:bg-gradient-to-r hover:from-purple-50 hover:via-pink-50 hover:to-fuchsia-50 cursor-pointer transition-all duration-200 border-b border-purple-100 last:border-b-0"
+                                >
+                                  <div className="font-bold text-purple-900">{producto.nombre}</div>
+                                  <div className="text-sm text-purple-600 mt-1">
+                                    Stock: {producto.cantidad} | Precio: ${producto.precio.toFixed(2)}
+                                  </div>
+                                </div>
                               ))}
-                          </select>
+                            </div>
+                          )}
                         </div>
-                        <div>
-                          <label className="block text-sm font-bold text-purple-800 mb-2">
-                            📦 Cantidad (Max: {stockDisponible})
-                          </label>
+                        <div className="col-span-2">
                           <input
                             type="number"
                             min="1"
@@ -371,11 +478,14 @@ export default function Salidas() {
                             onChange={(e) =>
                               actualizarItem(index, 'cantidad', parseInt(e.target.value) || 1)
                             }
-                            className="w-full px-4 py-3 text-base border-2 border-purple-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium"
+                            data-row={index}
+                            data-field="cantidad"
+                            className="w-full px-4 py-2.5 text-base border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
+                            placeholder="Cantidad"
+                            title={`Máximo: ${stockDisponible}`}
                           />
                         </div>
-                        <div>
-                          <label className="block text-sm font-bold text-purple-800 mb-2">💰 Precio Unitario</label>
+                        <div className="col-span-2">
                           <input
                             type="number"
                             step="0.01"
@@ -385,31 +495,31 @@ export default function Salidas() {
                             onChange={(e) =>
                               actualizarItem(index, 'precio', parseFloat(e.target.value) || 0)
                             }
-                            className="w-full px-4 py-3 text-base border-2 border-purple-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium"
+                            data-row={index}
+                            data-field="precio"
+                            className="w-full px-4 py-2.5 text-base border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
                             placeholder="0.00"
                           />
                         </div>
-                        <div className="flex items-end">
+                        <div className="col-span-2 flex items-center">
+                          <span className="text-base font-bold text-green-600">
+                            ${(item.cantidad * item.precio).toFixed(2)}
+                          </span>
+                        </div>
+                        <div className="col-span-2 flex items-center justify-center">
                           <button
                             type="button"
                             onClick={() => eliminarItem(index)}
-                            className="w-full bg-gradient-to-r from-red-400 to-pink-500 text-white px-5 py-3 rounded-xl hover:from-red-500 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110 font-bold flex items-center justify-center space-x-2"
+                            className="text-red-500 hover:text-red-700 transition-colors duration-200 text-xl font-bold"
+                            title="Eliminar renglón"
                           >
-                            <span>🗑️</span>
-                            <span>Eliminar</span>
+                            🗑️
                           </button>
                         </div>
                       </div>
-                      {item.cantidad > 0 && item.precio > 0 && (
-                        <div className="mt-4 pt-4 border-t-2 border-purple-300">
-                          <p className="text-sm font-bold text-purple-800">
-                            ✨ Subtotal: ${(item.cantidad * item.precio).toFixed(2)}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
 
               {items.length > 0 && (
@@ -426,6 +536,9 @@ export default function Salidas() {
                   onClick={() => {
                     setShowModal(false);
                     setItems([]);
+                    setBusqueda({});
+                    setSugerencias({});
+                    setMostrarSugerencias({});
                   }}
                   className="px-8 py-4 border-2 border-purple-300 rounded-2xl text-purple-700 font-bold hover:bg-purple-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                 >
