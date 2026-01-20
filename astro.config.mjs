@@ -12,15 +12,19 @@ export default defineConfig({
     })
   ],
   output: 'server',
-  adapter: vercel(),
+  adapter: vercel({
+    // Configuración para serverless functions
+    functionPerRoute: false,
+  }),
   vite: {
     optimizeDeps: {
       include: ['react', 'react-dom'],
+      exclude: ['mongoose', 'mongodb', 'bson'],
     },
     ssr: {
-      // Incluir mongoose en el bundle para Vercel serverless
-      // Esto asegura que mongoose esté disponible en las funciones serverless
-      noExternal: ['mongoose'],
+      // Hacer mongoose y sus dependencias externas para evitar problemas de empaquetado ESM
+      // El adaptador de Vercel las incluirá desde node_modules en runtime
+      external: ['mongoose', 'mongodb', 'bson'],
     },
   },
 });
