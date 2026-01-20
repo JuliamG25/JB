@@ -16,12 +16,11 @@ export default defineConfig({
   vite: {
     optimizeDeps: {
       include: ['react', 'react-dom'],
-      exclude: ['mongoose'],
     },
     ssr: {
-      // Hacer mongoose externo para evitar que esbuild lo procese
-      // En Vercel serverless, mongoose estará disponible en node_modules
-      external: ['mongoose'],
+      // Incluir mongoose en el bundle para Vercel serverless
+      // Esto asegura que mongoose esté disponible en las funciones serverless
+      noExternal: ['mongoose'],
     },
   },
 });

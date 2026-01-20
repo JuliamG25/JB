@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Layout from '../components/Layout';
+import EntradasComponent from '../components/Entradas';
+---
+
+<BaseLayout>
+  <Layout client:load>
+    <EntradasComponent client:load />
+  </Layout>
+</BaseLayout>
+
