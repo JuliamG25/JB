@@ -329,94 +329,123 @@ export default function Salidas() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center mb-8">
+    <div className="space-y-6 px-2 sm:px-0">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8 gap-4">
         <div>
-          <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
             📤 Salidas / Ventas
           </h2>
-          <p className="text-gray-600 mt-2">Registra las ventas y salidas de productos</p>
+          <p className="text-gray-600 mt-2 text-sm sm:text-base">Registra las ventas y salidas de productos</p>
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center space-x-2"
+          className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 sm:px-6 py-3 rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 sm:hover:scale-110 flex items-center justify-center space-x-2 w-full sm:w-auto"
         >
-          <span className="text-xl">+</span>
-          <span>Nueva Salida</span>
+          <span className="text-lg sm:text-xl">+</span>
+          <span className="text-sm sm:text-base">Nueva Salida</span>
         </button>
       </div>
 
       {salidas.length === 0 ? (
-        <div className="text-center py-20 bg-white rounded-2xl shadow-lg border-2 border-dashed border-gray-300">
-          <div className="text-6xl mb-4">📤</div>
-          <p className="text-gray-600 text-xl font-medium mb-2">No hay salidas registradas</p>
-          <p className="text-gray-400 text-sm">Comienza registrando tu primera venta</p>
+        <div className="text-center py-12 sm:py-16 md:py-20 bg-white rounded-2xl shadow-lg border-2 border-dashed border-gray-300 px-4">
+          <div className="text-5xl sm:text-6xl mb-3 sm:mb-4">📤</div>
+          <p className="text-gray-600 text-lg sm:text-xl font-medium mb-2">No hay salidas registradas</p>
+          <p className="text-gray-400 text-xs sm:text-sm">Comienza registrando tu primera venta</p>
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {salidas.map((salida) => {
             const totalSalida = salida.productos.reduce((sum, item) => sum + (item.cantidad * item.precio), 0);
             return (
-              <div key={salida._id} className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8 border-2 border-purple-200/50 hover:shadow-purple-500/30 transition-all duration-300 transform hover:scale-[1.02]">
-                <div className="flex justify-between items-center mb-8 pb-6 border-b-2 border-purple-100">
+              <div key={salida._id} className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-8 border-2 border-purple-200/50 hover:shadow-purple-500/30 transition-all duration-300 transform hover:scale-[1.01] sm:hover:scale-[1.02]">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6 md:mb-8 pb-4 sm:pb-6 border-b-2 border-purple-100 gap-3">
                   <div>
-                    <h3 className="text-2xl font-bold text-purple-900 flex items-center space-x-3">
-                      <span className="text-3xl">📅</span>
-                      <span>{new Date(salida.fecha).toLocaleDateString('es-ES', { 
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-purple-900 flex items-center space-x-2 sm:space-x-3">
+                      <span className="text-2xl sm:text-3xl">📅</span>
+                      <span className="break-words">{new Date(salida.fecha).toLocaleDateString('es-ES', { 
                         year: 'numeric', 
                         month: 'long', 
                         day: 'numeric' 
                       })}</span>
                     </h3>
-                    <p className="text-sm text-purple-600 mt-2 font-semibold">
+                    <p className="text-xs sm:text-sm text-purple-600 mt-1 sm:mt-2 font-semibold">
                       {salida.productos.length} producto{salida.productos.length > 1 ? 's' : ''} vendido{salida.productos.length > 1 ? 's' : ''}
                     </p>
                   </div>
-                  <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500 text-white px-6 py-3 rounded-2xl font-bold text-xl shadow-xl">
+                  <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-lg sm:text-xl shadow-xl w-full sm:w-auto text-center">
                     Total: ${totalSalida.toFixed(2)}
                   </div>
                 </div>
-                <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-purple-100">
-                    <thead className="bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500">
-                      <tr>
-                        <th className="px-8 py-5 text-left text-sm font-bold text-white uppercase tracking-wider">
-                          💋 Producto
-                        </th>
-                        <th className="px-8 py-5 text-left text-sm font-bold text-white uppercase tracking-wider">
-                          📦 Cantidad
-                        </th>
-                        <th className="px-8 py-5 text-left text-sm font-bold text-white uppercase tracking-wider">
-                          💰 Precio Unitario
-                        </th>
-                        <th className="px-8 py-5 text-left text-sm font-bold text-white uppercase tracking-wider">
-                          ✨ Total
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white/50 divide-y divide-purple-100">
-                      {salida.productos.map((item, idx) => (
-                        <tr key={idx} className="hover:bg-gradient-to-r hover:from-purple-50 hover:via-pink-50 hover:to-fuchsia-50 transition-all duration-300">
-                          <td className="px-8 py-5 whitespace-nowrap">
-                            <div className="text-base font-bold text-purple-900">
-                              {typeof item.producto === 'object' ? item.producto.nombre : 'N/A'}
-                            </div>
-                          </td>
-                          <td className="px-8 py-5 whitespace-nowrap">
-                            <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-bold bg-gradient-to-r from-purple-400 to-pink-400 text-white shadow-md">
-                              {item.cantidad} unidades
-                            </span>
-                          </td>
-                          <td className="px-8 py-5 whitespace-nowrap text-base font-semibold text-purple-700">
-                            ${item.precio.toFixed(2)}
-                          </td>
-                          <td className="px-8 py-5 whitespace-nowrap text-base font-bold text-green-600">
-                            ${(item.cantidad * item.precio).toFixed(2)}
-                          </td>
+                {/* Vista móvil: Cards */}
+                <div className="block sm:hidden space-y-3">
+                  {salida.productos.map((item, idx) => (
+                    <div key={idx} className="bg-gradient-to-r from-purple-50 via-pink-50 to-fuchsia-50 rounded-xl p-4 border-2 border-purple-200">
+                      <div className="font-bold text-purple-900 text-base mb-2">
+                        {typeof item.producto === 'object' ? item.producto.nombre : 'N/A'}
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 text-sm">
+                        <div>
+                          <span className="text-purple-600 font-semibold">Cantidad:</span>
+                          <span className="ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-purple-400 to-pink-400 text-white">
+                            {item.cantidad} unidades
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-purple-600 font-semibold">Precio:</span>
+                          <span className="ml-2 text-purple-700 font-semibold">${item.precio.toFixed(2)}</span>
+                        </div>
+                        <div className="col-span-2 pt-2 border-t border-purple-200">
+                          <span className="text-purple-600 font-semibold">Total:</span>
+                          <span className="ml-2 text-green-600 font-bold text-base">${(item.cantidad * item.precio).toFixed(2)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {/* Vista desktop: Tabla */}
+                <div className="hidden sm:block overflow-x-auto -mx-4 sm:mx-0">
+                  <div className="inline-block min-w-full align-middle">
+                    <table className="min-w-full divide-y divide-purple-100">
+                      <thead className="bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500">
+                        <tr>
+                          <th className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 text-left text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                            💋 Producto
+                          </th>
+                          <th className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 text-left text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                            📦 Cantidad
+                          </th>
+                          <th className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 text-left text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                            💰 Precio Unitario
+                          </th>
+                          <th className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 text-left text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                            ✨ Total
+                          </th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody className="bg-white/50 divide-y divide-purple-100">
+                        {salida.productos.map((item, idx) => (
+                          <tr key={idx} className="hover:bg-gradient-to-r hover:from-purple-50 hover:via-pink-50 hover:to-fuchsia-50 transition-all duration-300">
+                            <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap">
+                              <div className="text-sm sm:text-base font-bold text-purple-900">
+                                {typeof item.producto === 'object' ? item.producto.nombre : 'N/A'}
+                              </div>
+                            </td>
+                            <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap">
+                              <span className="inline-flex items-center px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-bold bg-gradient-to-r from-purple-400 to-pink-400 text-white shadow-md">
+                                {item.cantidad} unidades
+                              </span>
+                            </td>
+                            <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap text-sm sm:text-base font-semibold text-purple-700">
+                              ${item.precio.toFixed(2)}
+                            </td>
+                            <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap text-sm sm:text-base font-bold text-green-600">
+                              ${(item.cantidad * item.precio).toFixed(2)}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             );
@@ -425,17 +454,17 @@ export default function Salidas() {
       )}
 
       {showModal && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4">
-          <div className="bg-white/95 backdrop-blur-lg rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto transform transition-all border-2 border-purple-200/50">
-            <div className="bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 px-8 py-6 rounded-t-3xl sticky top-0 z-10 border-b-2 border-purple-400/30">
-              <h3 className="text-3xl font-bold text-white flex items-center space-x-3">
-                <span className="text-4xl">📤</span>
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-2 sm:p-4">
+          <div className="bg-white/95 backdrop-blur-lg rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto transform transition-all border-2 border-purple-200/50">
+            <div className="bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 px-4 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6 rounded-t-2xl sm:rounded-t-3xl sticky top-0 z-10 border-b-2 border-purple-400/30">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white flex items-center space-x-2 sm:space-x-3">
+                <span className="text-2xl sm:text-3xl md:text-4xl">📤</span>
                 <span>Nueva Venta / Salida</span>
               </h3>
             </div>
-            <form onSubmit={handleSubmit} className="p-8 space-y-8">
+            <form onSubmit={handleSubmit} className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 md:space-y-8">
               <div>
-                <label className="block text-base font-bold text-purple-800 mb-3 flex items-center space-x-2">
+                <label className="block text-sm sm:text-base font-bold text-purple-800 mb-2 sm:mb-3 flex items-center space-x-2">
                   <span>📅</span>
                   <span>Fecha de Venta</span>
                 </label>
@@ -444,37 +473,37 @@ export default function Salidas() {
                   required
                   value={fecha}
                   onChange={(e) => setFecha(e.target.value)}
-                  className="w-full px-5 py-4 border-2 border-purple-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 text-lg font-medium"
+                  className="w-full px-3 sm:px-4 md:px-5 py-3 sm:py-4 border-2 border-purple-200 rounded-xl sm:rounded-2xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 text-sm sm:text-base md:text-lg font-medium"
                 />
               </div>
 
               <div>
-                <div className="flex justify-between items-center mb-4">
-                  <label className="block text-base font-bold text-purple-800 flex items-center space-x-2">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3 sm:mb-4 gap-3">
+                  <label className="block text-sm sm:text-base font-bold text-purple-800 flex items-center space-x-2">
                     <span>💋</span>
                     <span>Productos Vendidos</span>
                   </label>
                   <button
                     type="button"
                     onClick={agregarItem}
-                    className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110 font-bold flex items-center space-x-2"
+                    className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 sm:hover:scale-110 font-bold flex items-center justify-center space-x-2 w-full sm:w-auto text-sm sm:text-base"
                   >
-                    <span className="text-xl">✨</span>
+                    <span className="text-lg sm:text-xl">✨</span>
                     <span>Agregar Producto</span>
                   </button>
                 </div>
 
                 {items.length === 0 && (
-                  <div className="text-center py-12 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl border-2 border-dashed border-purple-300">
-                    <p className="text-purple-700 text-base font-bold">No hay productos agregados</p>
-                    <p className="text-pink-600 text-sm mt-2 font-medium">Haz clic en "Agregar Producto" para comenzar</p>
+                  <div className="text-center py-8 sm:py-12 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl sm:rounded-2xl border-2 border-dashed border-purple-300 px-4">
+                    <p className="text-purple-700 text-sm sm:text-base font-bold">No hay productos agregados</p>
+                    <p className="text-pink-600 text-xs sm:text-sm mt-2 font-medium">Haz clic en "Agregar Producto" para comenzar</p>
                   </div>
                 )}
 
                 <div className="space-y-3">
-                  {/* Encabezado de la tabla */}
+                  {/* Encabezado de la tabla - Solo visible en desktop */}
                   {items.length > 0 && (
-                    <div className="grid grid-cols-12 gap-3 px-4 py-3 bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500 rounded-xl text-white font-bold text-sm">
+                    <div className="hidden sm:grid grid-cols-12 gap-2 sm:gap-3 px-2 sm:px-4 py-2 sm:py-3 bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500 rounded-lg sm:rounded-xl text-white font-bold text-xs sm:text-sm">
                       <div className="col-span-4">💋 Producto</div>
                       <div className="col-span-2">📦 Cantidad</div>
                       <div className="col-span-2">💰 Precio</div>
@@ -491,110 +520,219 @@ export default function Salidas() {
                     return (
                       <div 
                         key={index} 
-                        className="grid grid-cols-12 gap-3 p-4 bg-gradient-to-r from-purple-50 via-pink-50 to-fuchsia-50 border-2 border-purple-200 rounded-xl hover:shadow-lg transition-all duration-300"
+                        className="bg-gradient-to-r from-purple-50 via-pink-50 to-fuchsia-50 border-2 border-purple-200 rounded-xl hover:shadow-lg transition-all duration-300"
                       >
-                        <div className="col-span-4 relative">
-                          <input
-                            type="text"
-                            required
-                            value={busqueda[index] || (item.producto ? productos.find(p => p._id === item.producto)?.nombre || '' : '')}
-                            onChange={(e) => {
-                              const texto = e.target.value;
-                              // Limpiar el producto seleccionado cuando el usuario escribe
-                              if (items[index].producto && texto !== busqueda[index]) {
-                                const nuevosItems = [...items];
-                                nuevosItems[index] = { 
-                                  ...nuevosItems[index], 
-                                  producto: '',
-                                  precio: 0
-                                };
-                                setItems(nuevosItems);
-                              }
-                              buscarProductos(texto, index);
-                            }}
-                            onFocus={() => {
-                              if (busqueda[index] || item.producto) {
-                                buscarProductos(busqueda[index] || productos.find(p => p._id === item.producto)?.nombre || '', index);
-                              }
-                            }}
-                            onBlur={() => {
-                              setTimeout(() => {
-                                setMostrarSugerencias(prev => ({ ...prev, [index]: false }));
-                              }, 200);
-                            }}
-                            data-row={index}
-                            data-field="producto"
-                            className="w-full px-4 py-2.5 text-base border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
-                            placeholder="Buscar producto..."
-                            autoComplete="off"
-                          />
-                          
-                          {/* Sugerencias */}
-                          {mostrarSugerencias[index] && sugerencias[index] && sugerencias[index].length > 0 && (
-                            <div className="absolute z-50 w-full mt-1 bg-white border-2 border-purple-200 rounded-lg shadow-2xl max-h-60 overflow-y-auto">
-                              {sugerencias[index].map((producto, idx) => (
-                                <div
-                                  key={producto._id}
-                                  onClick={() => seleccionarProducto(index, producto)}
-                                  className="px-4 py-3 hover:bg-gradient-to-r hover:from-purple-50 hover:via-pink-50 hover:to-fuchsia-50 cursor-pointer transition-all duration-200 border-b border-purple-100 last:border-b-0"
-                                >
-                                  <div className="font-bold text-purple-900">{producto.nombre}</div>
-                                  <div className="text-sm text-purple-600 mt-1">
-                                    Stock: {producto.cantidad} | Precio: ${producto.precio.toFixed(2)}
-                                    {producto.codigoBarras && ` | Código: ${producto.codigoBarras}`}
+                        {/* Vista móvil: Stack vertical */}
+                        <div className="block sm:hidden p-3 space-y-3">
+                          <div className="flex items-center justify-between">
+                            <label className="text-xs font-bold text-purple-800">💋 Producto</label>
+                            <button
+                              type="button"
+                              onClick={() => eliminarItem(index)}
+                              className="text-red-500 hover:text-red-700 transition-colors duration-200 text-lg font-bold"
+                              title="Eliminar renglón"
+                            >
+                              🗑️
+                            </button>
+                          </div>
+                          <div className="relative">
+                            <input
+                              type="text"
+                              required
+                              value={busqueda[index] || (item.producto ? productos.find(p => p._id === item.producto)?.nombre || '' : '')}
+                              onChange={(e) => {
+                                const texto = e.target.value;
+                                if (items[index].producto && texto !== busqueda[index]) {
+                                  const nuevosItems = [...items];
+                                  nuevosItems[index] = { 
+                                    ...nuevosItems[index], 
+                                    producto: '',
+                                    precio: 0
+                                  };
+                                  setItems(nuevosItems);
+                                }
+                                buscarProductos(texto, index);
+                              }}
+                              onFocus={() => {
+                                if (busqueda[index] || item.producto) {
+                                  buscarProductos(busqueda[index] || productos.find(p => p._id === item.producto)?.nombre || '', index);
+                                }
+                              }}
+                              onBlur={() => {
+                                setTimeout(() => {
+                                  setMostrarSugerencias(prev => ({ ...prev, [index]: false }));
+                                }, 200);
+                              }}
+                              data-row={index}
+                              data-field="producto"
+                              className="w-full px-3 py-2 text-sm border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
+                              placeholder="Buscar producto..."
+                              autoComplete="off"
+                            />
+                            {mostrarSugerencias[index] && sugerencias[index] && sugerencias[index].length > 0 && (
+                              <div className="absolute z-50 w-full mt-1 bg-white border-2 border-purple-200 rounded-lg shadow-2xl max-h-48 overflow-y-auto">
+                                {sugerencias[index].map((producto, idx) => (
+                                  <div
+                                    key={producto._id}
+                                    onClick={() => seleccionarProducto(index, producto)}
+                                    className="px-3 py-2 hover:bg-gradient-to-r hover:from-purple-50 hover:via-pink-50 hover:to-fuchsia-50 cursor-pointer transition-all duration-200 border-b border-purple-100 last:border-b-0"
+                                  >
+                                    <div className="font-bold text-purple-900 text-sm">{producto.nombre}</div>
+                                    <div className="text-xs text-purple-600 mt-1">
+                                      Stock: {producto.cantidad} | Precio: ${producto.precio.toFixed(2)}
+                                      {producto.codigoBarras && ` | Código: ${producto.codigoBarras}`}
+                                    </div>
                                   </div>
-                                </div>
-                              ))}
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                          <div className="grid grid-cols-2 gap-2">
+                            <div>
+                              <label className="block text-xs font-bold text-purple-800 mb-1">📦 Cantidad</label>
+                              <input
+                                type="number"
+                                min="1"
+                                max={stockDisponible}
+                                required
+                                value={item.cantidad}
+                                onChange={(e) =>
+                                  actualizarItem(index, 'cantidad', parseInt(e.target.value) || 1)
+                                }
+                                data-row={index}
+                                data-field="cantidad"
+                                className="w-full px-3 py-2 text-sm border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
+                                placeholder="Cantidad"
+                                title={`Máximo: ${stockDisponible}`}
+                              />
                             </div>
-                          )}
+                            <div>
+                              <label className="block text-xs font-bold text-purple-800 mb-1">💰 Precio</label>
+                              <input
+                                type="number"
+                                step="0.01"
+                                min="0"
+                                required
+                                value={item.precio}
+                                onChange={(e) =>
+                                  actualizarItem(index, 'precio', parseFloat(e.target.value) || 0)
+                                }
+                                data-row={index}
+                                data-field="precio"
+                                className="w-full px-3 py-2 text-sm border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
+                                placeholder="0.00"
+                              />
+                            </div>
+                          </div>
+                          <div className="pt-2 border-t border-purple-200">
+                            <label className="block text-xs font-bold text-purple-800 mb-1">✨ Subtotal</label>
+                            <span className="text-base font-bold text-green-600">
+                              ${(item.cantidad * item.precio).toFixed(2)}
+                            </span>
+                          </div>
                         </div>
-                        <div className="col-span-2">
-                          <input
-                            type="number"
-                            min="1"
-                            max={stockDisponible}
-                            required
-                            value={item.cantidad}
-                            onChange={(e) =>
-                              actualizarItem(index, 'cantidad', parseInt(e.target.value) || 1)
-                            }
-                            data-row={index}
-                            data-field="cantidad"
-                            className="w-full px-4 py-2.5 text-base border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
-                            placeholder="Cantidad"
-                            title={`Máximo: ${stockDisponible}`}
-                          />
-                        </div>
-                        <div className="col-span-2">
-                          <input
-                            type="number"
-                            step="0.01"
-                            min="0"
-                            required
-                            value={item.precio}
-                            onChange={(e) =>
-                              actualizarItem(index, 'precio', parseFloat(e.target.value) || 0)
-                            }
-                            data-row={index}
-                            data-field="precio"
-                            className="w-full px-4 py-2.5 text-base border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
-                            placeholder="0.00"
-                          />
-                        </div>
-                        <div className="col-span-2 flex items-center">
-                          <span className="text-base font-bold text-green-600">
-                            ${(item.cantidad * item.precio).toFixed(2)}
-                          </span>
-                        </div>
-                        <div className="col-span-2 flex items-center justify-center">
-                          <button
-                            type="button"
-                            onClick={() => eliminarItem(index)}
-                            className="text-red-500 hover:text-red-700 transition-colors duration-200 text-xl font-bold"
-                            title="Eliminar renglón"
-                          >
-                            🗑️
-                          </button>
+                        {/* Vista desktop: Grid */}
+                        <div className="hidden sm:grid grid-cols-12 gap-2 sm:gap-3 p-3 sm:p-4">
+                          <div className="col-span-4 relative">
+                            <input
+                              type="text"
+                              required
+                              value={busqueda[index] || (item.producto ? productos.find(p => p._id === item.producto)?.nombre || '' : '')}
+                              onChange={(e) => {
+                                const texto = e.target.value;
+                                if (items[index].producto && texto !== busqueda[index]) {
+                                  const nuevosItems = [...items];
+                                  nuevosItems[index] = { 
+                                    ...nuevosItems[index], 
+                                    producto: '',
+                                    precio: 0
+                                  };
+                                  setItems(nuevosItems);
+                                }
+                                buscarProductos(texto, index);
+                              }}
+                              onFocus={() => {
+                                if (busqueda[index] || item.producto) {
+                                  buscarProductos(busqueda[index] || productos.find(p => p._id === item.producto)?.nombre || '', index);
+                                }
+                              }}
+                              onBlur={() => {
+                                setTimeout(() => {
+                                  setMostrarSugerencias(prev => ({ ...prev, [index]: false }));
+                                }, 200);
+                              }}
+                              data-row={index}
+                              data-field="producto"
+                              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
+                              placeholder="Buscar producto..."
+                              autoComplete="off"
+                            />
+                            {mostrarSugerencias[index] && sugerencias[index] && sugerencias[index].length > 0 && (
+                              <div className="absolute z-50 w-full mt-1 bg-white border-2 border-purple-200 rounded-lg shadow-2xl max-h-60 overflow-y-auto">
+                                {sugerencias[index].map((producto, idx) => (
+                                  <div
+                                    key={producto._id}
+                                    onClick={() => seleccionarProducto(index, producto)}
+                                    className="px-4 py-3 hover:bg-gradient-to-r hover:from-purple-50 hover:via-pink-50 hover:to-fuchsia-50 cursor-pointer transition-all duration-200 border-b border-purple-100 last:border-b-0"
+                                  >
+                                    <div className="font-bold text-purple-900">{producto.nombre}</div>
+                                    <div className="text-sm text-purple-600 mt-1">
+                                      Stock: {producto.cantidad} | Precio: ${producto.precio.toFixed(2)}
+                                      {producto.codigoBarras && ` | Código: ${producto.codigoBarras}`}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                          <div className="col-span-2">
+                            <input
+                              type="number"
+                              min="1"
+                              max={stockDisponible}
+                              required
+                              value={item.cantidad}
+                              onChange={(e) =>
+                                actualizarItem(index, 'cantidad', parseInt(e.target.value) || 1)
+                              }
+                              data-row={index}
+                              data-field="cantidad"
+                              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
+                              placeholder="Cantidad"
+                              title={`Máximo: ${stockDisponible}`}
+                            />
+                          </div>
+                          <div className="col-span-2">
+                            <input
+                              type="number"
+                              step="0.01"
+                              min="0"
+                              required
+                              value={item.precio}
+                              onChange={(e) =>
+                                actualizarItem(index, 'precio', parseFloat(e.target.value) || 0)
+                              }
+                              data-row={index}
+                              data-field="precio"
+                              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
+                              placeholder="0.00"
+                            />
+                          </div>
+                          <div className="col-span-2 flex items-center">
+                            <span className="text-sm sm:text-base font-bold text-green-600">
+                              ${(item.cantidad * item.precio).toFixed(2)}
+                            </span>
+                          </div>
+                          <div className="col-span-2 flex items-center justify-center">
+                            <button
+                              type="button"
+                              onClick={() => eliminarItem(index)}
+                              className="text-red-500 hover:text-red-700 transition-colors duration-200 text-lg sm:text-xl font-bold"
+                              title="Eliminar renglón"
+                            >
+                              🗑️
+                            </button>
+                          </div>
                         </div>
                       </div>
                     );
@@ -603,14 +741,14 @@ export default function Salidas() {
               </div>
 
               {items.length > 0 && (
-                <div className="bg-gradient-to-r from-purple-100 to-pink-100 border-2 border-purple-300 rounded-2xl p-5 mb-4 shadow-lg">
-                  <p className="text-base font-bold text-purple-900">
+                <div className="bg-gradient-to-r from-purple-100 to-pink-100 border-2 border-purple-300 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 mb-3 sm:mb-4 shadow-lg">
+                  <p className="text-sm sm:text-base font-bold text-purple-900">
                     💎 Total de la Venta: ${items.reduce((sum, item) => sum + item.cantidad * item.precio, 0).toFixed(2)}
                   </p>
                 </div>
               )}
 
-              <div className="flex justify-end space-x-4 pt-6 border-t-2 border-purple-100">
+              <div className="flex flex-col sm:flex-row sm:justify-end gap-3 sm:gap-4 pt-4 sm:pt-6 border-t-2 border-purple-100">
                 <button
                   type="button"
                   onClick={() => {
@@ -620,14 +758,14 @@ export default function Salidas() {
                     setSugerencias({});
                     setMostrarSugerencias({});
                   }}
-                  className="px-8 py-4 border-2 border-purple-300 rounded-2xl text-purple-700 font-bold hover:bg-purple-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                  className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-purple-300 rounded-xl sm:rounded-2xl text-purple-700 font-bold hover:bg-purple-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 w-full sm:w-auto text-sm sm:text-base"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={items.length === 0}
-                  className={`px-8 py-4 rounded-2xl font-bold transition-all duration-300 shadow-2xl hover:shadow-purple-500/50 transform hover:scale-110 flex items-center space-x-2 ${
+                  className={`px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold transition-all duration-300 shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 sm:hover:scale-110 flex items-center justify-center space-x-2 w-full sm:w-auto text-sm sm:text-base ${
                     items.length === 0
                       ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
                       : 'bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 text-white hover:from-purple-700 hover:via-pink-600 hover:to-fuchsia-700'

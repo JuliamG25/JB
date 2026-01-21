@@ -112,51 +112,51 @@ export default function Ganancias() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="mb-8">
-        <h2 className="text-5xl font-extrabold bg-gradient-to-r from-purple-600 via-pink-600 to-fuchsia-600 bg-clip-text text-transparent mb-2">
+    <div className="space-y-6 px-2 sm:px-0">
+      <div className="mb-6 sm:mb-8">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-purple-600 via-pink-600 to-fuchsia-600 bg-clip-text text-transparent mb-2">
           💰 Análisis de Ganancias
         </h2>
-        <p className="text-purple-700 mt-2 text-lg font-medium">Ganancias reales basadas en productos vendidos</p>
+        <p className="text-purple-700 mt-2 text-sm sm:text-base md:text-lg font-medium">Ganancias reales basadas en productos vendidos</p>
       </div>
 
       {/* Filtros de fecha */}
-      <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-6 border-2 border-purple-200/50">
-        <h3 className="text-xl font-bold text-purple-800 mb-4 flex items-center space-x-2">
+      <div className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 border-2 border-purple-200/50">
+        <h3 className="text-lg sm:text-xl font-bold text-purple-800 mb-3 sm:mb-4 flex items-center space-x-2">
           <span>📅</span>
           <span>Filtrar por Fechas</span>
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <div>
-            <label className="block text-sm font-bold text-purple-700 mb-2">Fecha Inicio</label>
+            <label className="block text-xs sm:text-sm font-bold text-purple-700 mb-1 sm:mb-2">Fecha Inicio</label>
             <input
               type="date"
               value={fechaInicio}
               onChange={(e) => setFechaInicio(e.target.value)}
-              className="w-full px-4 py-2.5 border-2 border-purple-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium"
+              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-purple-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium text-sm sm:text-base"
             />
           </div>
           <div>
-            <label className="block text-sm font-bold text-purple-700 mb-2">Fecha Fin</label>
+            <label className="block text-xs sm:text-sm font-bold text-purple-700 mb-1 sm:mb-2">Fecha Fin</label>
             <input
               type="date"
               value={fechaFin}
               onChange={(e) => setFechaFin(e.target.value)}
-              className="w-full px-4 py-2.5 border-2 border-purple-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium"
+              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-purple-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium text-sm sm:text-base"
             />
           </div>
-          <div className="flex items-end">
+          <div className="flex items-end sm:col-span-2 lg:col-span-1">
             <button
               onClick={aplicarFiltros}
-              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2.5 rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110 font-bold"
+              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-lg sm:rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 sm:hover:scale-110 font-bold text-sm sm:text-base"
             >
               🔍 Aplicar Filtros
             </button>
           </div>
-          <div className="flex items-end">
+          <div className="flex items-end sm:col-span-2 lg:col-span-1">
             <button
               onClick={limpiarFiltros}
-              className="w-full bg-gradient-to-r from-gray-400 to-gray-500 text-white px-6 py-2.5 rounded-xl hover:from-gray-500 hover:to-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110 font-bold"
+              className="w-full bg-gradient-to-r from-gray-400 to-gray-500 text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-lg sm:rounded-xl hover:from-gray-500 hover:to-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 sm:hover:scale-110 font-bold text-sm sm:text-base"
             >
               🗑️ Limpiar
             </button>
@@ -165,157 +165,251 @@ export default function Ganancias() {
       </div>
 
       {/* Tarjetas de resumen */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-gradient-to-br from-purple-500 via-pink-500 to-fuchsia-600 rounded-3xl shadow-2xl p-8 text-white transform hover:scale-110 transition-all duration-300 border-2 border-white/20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        <div className="bg-gradient-to-br from-purple-500 via-pink-500 to-fuchsia-600 rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 text-white transform hover:scale-105 sm:hover:scale-110 transition-all duration-300 border-2 border-white/20">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-purple-100 text-base font-bold mb-2">Ganancia Total Potencial</p>
-              <p className="text-4xl font-extrabold">${gananciaTotalGeneral.toFixed(2)}</p>
+              <p className="text-purple-100 text-sm sm:text-base font-bold mb-2">Ganancia Total Potencial</p>
+              <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold">${gananciaTotalGeneral.toFixed(2)}</p>
             </div>
-            <div className="text-6xl opacity-90">💰</div>
+            <div className="text-4xl sm:text-5xl md:text-6xl opacity-90">💰</div>
           </div>
         </div>
-        <div className="bg-gradient-to-br from-pink-500 via-purple-500 to-fuchsia-500 rounded-3xl shadow-2xl p-8 text-white transform hover:scale-110 transition-all duration-300 border-2 border-white/20">
+        <div className="bg-gradient-to-br from-pink-500 via-purple-500 to-fuchsia-500 rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 text-white transform hover:scale-105 sm:hover:scale-110 transition-all duration-300 border-2 border-white/20">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-pink-100 text-base font-bold mb-2">Promedio por Producto</p>
-              <p className="text-4xl font-extrabold">${gananciaPromedio.toFixed(2)}</p>
+              <p className="text-pink-100 text-sm sm:text-base font-bold mb-2">Promedio por Producto</p>
+              <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold">${gananciaPromedio.toFixed(2)}</p>
             </div>
-            <div className="text-6xl opacity-90">📊</div>
+            <div className="text-4xl sm:text-5xl md:text-6xl opacity-90">📊</div>
           </div>
         </div>
-        <div className="bg-gradient-to-br from-fuchsia-500 via-pink-500 to-purple-500 rounded-3xl shadow-2xl p-8 text-white transform hover:scale-110 transition-all duration-300 border-2 border-white/20">
+        <div className="bg-gradient-to-br from-fuchsia-500 via-pink-500 to-purple-500 rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 text-white transform hover:scale-105 sm:hover:scale-110 transition-all duration-300 border-2 border-white/20 sm:col-span-2 lg:col-span-1">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-fuchsia-100 text-base font-bold mb-2">Total de Productos</p>
-              <p className="text-4xl font-extrabold">{ganancias.length}</p>
+              <p className="text-fuchsia-100 text-sm sm:text-base font-bold mb-2">Total de Productos</p>
+              <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold">{ganancias.length}</p>
             </div>
-            <div className="text-6xl opacity-90">💄</div>
+            <div className="text-4xl sm:text-5xl md:text-6xl opacity-90">💄</div>
           </div>
         </div>
       </div>
 
       {ganancias.length === 0 ? (
-        <div className="text-center py-24 bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl shadow-xl border-2 border-dashed border-purple-300">
-          <div className="text-7xl mb-6 animate-pulse">📊</div>
-          <p className="text-purple-700 text-2xl font-bold mb-3">No hay productos vendidos</p>
-          <p className="text-pink-600 text-base font-medium">Registra algunas ventas primero para ver las ganancias</p>
+        <div className="text-center py-12 sm:py-16 md:py-24 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-dashed border-purple-300 px-4">
+          <div className="text-5xl sm:text-6xl md:text-7xl mb-4 sm:mb-6 animate-pulse">📊</div>
+          <p className="text-purple-700 text-xl sm:text-2xl font-bold mb-2 sm:mb-3">No hay productos vendidos</p>
+          <p className="text-pink-600 text-sm sm:text-base font-medium">Registra algunas ventas primero para ver las ganancias</p>
         </div>
       ) : (
-        <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border-2 border-purple-200/50">
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-purple-100">
-              <thead className="bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500">
-                <tr>
-                  <th className="px-8 py-5 text-left text-sm font-bold text-white uppercase tracking-wider">
-                    💋 Producto
-                  </th>
-                  <th className="px-8 py-5 text-left text-sm font-bold text-white uppercase tracking-wider">
-                    💰 Precio Venta
-                  </th>
-                  <th className="px-8 py-5 text-left text-sm font-bold text-white uppercase tracking-wider">
-                    📊 Costo
-                  </th>
-                  <th className="px-8 py-5 text-left text-sm font-bold text-white uppercase tracking-wider">
-                    📦 Cantidad
-                  </th>
-                  <th className="px-8 py-5 text-left text-sm font-bold text-white uppercase tracking-wider">
-                    ✨ Ganancia/Unidad
-                  </th>
-                  <th className="px-8 py-5 text-left text-sm font-bold text-white uppercase tracking-wider">
-                    💎 Ganancia Total
-                  </th>
-                  <th className="px-8 py-5 text-left text-sm font-bold text-white uppercase tracking-wider">
-                    📈 Rentabilidad %
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white/50 divide-y divide-purple-100">
-                {ganancias.map((ganancia, index) => {
-                  const gananciaPorUnidad = parseFloat(ganancia.gananciaPorUnidad);
-                  const esNegativa = gananciaPorUnidad < 0;
-                  const esPositiva = gananciaPorUnidad > 0;
-                  
-                  return (
-                    <tr
-                      key={ganancia._id}
-                      className={`hover:bg-gradient-to-r transition-all duration-300 group ${
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border-2 border-purple-200/50">
+          {/* Vista móvil: Cards */}
+          <div className="block sm:hidden p-4 space-y-4">
+            {ganancias.map((ganancia, index) => {
+              const gananciaPorUnidad = parseFloat(ganancia.gananciaPorUnidad);
+              const esNegativa = gananciaPorUnidad < 0;
+              const esPositiva = gananciaPorUnidad > 0;
+              
+              return (
+                <div
+                  key={ganancia._id}
+                  className={`bg-gradient-to-r rounded-xl p-4 border-2 ${
+                    esNegativa
+                      ? 'from-red-50 via-pink-50 to-red-50 border-red-200'
+                      : esPositiva
+                      ? 'from-green-50 via-emerald-50 to-green-50 border-green-200'
+                      : 'from-purple-50 via-pink-50 to-fuchsia-50 border-purple-200'
+                  }`}
+                >
+                  <div className="flex items-center mb-3">
+                    <div className={`flex-shrink-0 h-10 w-10 rounded-xl flex items-center justify-center text-white font-bold mr-3 shadow-lg ${
+                      esNegativa
+                        ? 'bg-gradient-to-br from-red-500 to-pink-500'
+                        : esPositiva
+                        ? 'bg-gradient-to-br from-green-500 to-emerald-500'
+                        : 'bg-gradient-to-br from-purple-500 via-pink-500 to-fuchsia-500'
+                    }`}>
+                      {ganancia.nombre.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-bold text-purple-900 truncate">{ganancia.nombre}</div>
+                      <div className="text-xs text-purple-500 font-medium">ID: {ganancia._id.slice(-6)}</div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div>
+                      <span className="text-purple-600 font-semibold">Precio:</span>
+                      <span className="ml-1 text-green-600 font-bold">${ganancia.precio.toFixed(2)}</span>
+                    </div>
+                    <div>
+                      <span className="text-purple-600 font-semibold">Costo:</span>
+                      <span className="ml-1 text-purple-700 font-semibold">${ganancia.costo.toFixed(2)}</span>
+                    </div>
+                    <div>
+                      <span className="text-purple-600 font-semibold">Cantidad:</span>
+                      <span className="ml-1 inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-purple-400 to-pink-400 text-white">
+                        {ganancia.cantidad}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-purple-600 font-semibold">Rentabilidad:</span>
+                      <span className={`ml-1 inline-flex items-center px-2 py-1 rounded-full text-xs font-bold ${
                         esNegativa
-                          ? 'hover:from-red-50 hover:via-pink-50 hover:to-red-50'
+                          ? 'bg-gradient-to-r from-red-400 to-pink-500 text-white'
+                          : parseFloat(ganancia.rentabilidad) > 50
+                          ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white'
+                          : parseFloat(ganancia.rentabilidad) > 20
+                          ? 'bg-gradient-to-r from-purple-400 to-pink-400 text-white'
+                          : 'bg-gradient-to-r from-yellow-400 to-orange-400 text-white'
+                      }`}>
+                        {ganancia.rentabilidad}%
+                      </span>
+                    </div>
+                    <div className="col-span-2 pt-2 border-t border-purple-200">
+                      <span className="text-purple-600 font-semibold">Ganancia/Unidad:</span>
+                      <span className={`ml-1 inline-flex items-center px-2 py-1 rounded-full text-xs font-bold ${
+                        esNegativa
+                          ? 'bg-gradient-to-r from-red-400 to-pink-500 text-white'
                           : esPositiva
-                          ? 'hover:from-green-50 hover:via-emerald-50 hover:to-green-50'
-                          : 'hover:from-purple-50 hover:via-pink-50 hover:to-fuchsia-50'
-                      }`}
-                      style={{ animationDelay: `${index * 50}ms` }}
-                    >
-                      <td className="px-8 py-5 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className={`flex-shrink-0 h-12 w-12 rounded-2xl flex items-center justify-center text-white font-bold mr-4 shadow-lg group-hover:scale-110 transition-transform duration-300 ${
+                          ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white'
+                          : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white'
+                      }`}>
+                        ${ganancia.gananciaPorUnidad}
+                      </span>
+                    </div>
+                    <div className="col-span-2">
+                      <span className="text-purple-600 font-semibold">Ganancia Total:</span>
+                      <span className={`ml-1 inline-flex items-center px-2 py-1 rounded-full text-xs font-bold ${
+                        esNegativa
+                          ? 'bg-gradient-to-r from-red-400 to-pink-500 text-white'
+                          : esPositiva
+                          ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white'
+                          : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white'
+                      }`}>
+                        ${ganancia.gananciaTotal}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {/* Vista desktop: Tabla */}
+          <div className="hidden sm:block overflow-x-auto -mx-4 sm:mx-0">
+            <div className="inline-block min-w-full align-middle">
+              <table className="min-w-full divide-y divide-purple-100">
+                <thead className="bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500">
+                  <tr>
+                    <th className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 text-left text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                      💋 Producto
+                    </th>
+                    <th className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 text-left text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                      💰 Precio Venta
+                    </th>
+                    <th className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 text-left text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                      📊 Costo
+                    </th>
+                    <th className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 text-left text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                      📦 Cantidad
+                    </th>
+                    <th className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 text-left text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                      ✨ Ganancia/Unidad
+                    </th>
+                    <th className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 text-left text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                      💎 Ganancia Total
+                    </th>
+                    <th className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 text-left text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                      📈 Rentabilidad %
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white/50 divide-y divide-purple-100">
+                  {ganancias.map((ganancia, index) => {
+                    const gananciaPorUnidad = parseFloat(ganancia.gananciaPorUnidad);
+                    const esNegativa = gananciaPorUnidad < 0;
+                    const esPositiva = gananciaPorUnidad > 0;
+                    
+                    return (
+                      <tr
+                        key={ganancia._id}
+                        className={`hover:bg-gradient-to-r transition-all duration-300 group ${
+                          esNegativa
+                            ? 'hover:from-red-50 hover:via-pink-50 hover:to-red-50'
+                            : esPositiva
+                            ? 'hover:from-green-50 hover:via-emerald-50 hover:to-green-50'
+                            : 'hover:from-purple-50 hover:via-pink-50 hover:to-fuchsia-50'
+                        }`}
+                        style={{ animationDelay: `${index * 50}ms` }}
+                      >
+                        <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className={`flex-shrink-0 h-10 w-10 sm:h-12 sm:w-12 rounded-xl sm:rounded-2xl flex items-center justify-center text-white font-bold mr-3 sm:mr-4 shadow-lg group-hover:scale-110 transition-transform duration-300 ${
+                              esNegativa
+                                ? 'bg-gradient-to-br from-red-500 to-pink-500'
+                                : esPositiva
+                                ? 'bg-gradient-to-br from-green-500 to-emerald-500'
+                                : 'bg-gradient-to-br from-purple-500 via-pink-500 to-fuchsia-500'
+                            }`}>
+                              {ganancia.nombre.charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                              <div className="text-sm sm:text-base font-bold text-purple-900">{ganancia.nombre}</div>
+                              <div className="text-xs text-purple-500 font-medium">ID: {ganancia._id.slice(-6)}</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap">
+                          <div className="text-sm sm:text-base font-bold text-green-600">${ganancia.precio.toFixed(2)}</div>
+                        </td>
+                        <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap">
+                          <div className="text-sm sm:text-base font-semibold text-purple-700">${ganancia.costo.toFixed(2)}</div>
+                        </td>
+                        <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap">
+                          <span className="inline-flex items-center px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-bold bg-gradient-to-r from-purple-400 to-pink-400 text-white shadow-md">
+                            {ganancia.cantidad}
+                          </span>
+                        </td>
+                        <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap">
+                          <span className={`inline-flex items-center px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-bold shadow-md ${
                             esNegativa
-                              ? 'bg-gradient-to-br from-red-500 to-pink-500'
+                              ? 'bg-gradient-to-r from-red-400 to-pink-500 text-white'
                               : esPositiva
-                              ? 'bg-gradient-to-br from-green-500 to-emerald-500'
-                              : 'bg-gradient-to-br from-purple-500 via-pink-500 to-fuchsia-500'
+                              ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white'
+                              : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white'
                           }`}>
-                            {ganancia.nombre.charAt(0).toUpperCase()}
-                          </div>
-                          <div>
-                            <div className="text-base font-bold text-purple-900">{ganancia.nombre}</div>
-                            <div className="text-xs text-purple-500 font-medium">ID: {ganancia._id.slice(-6)}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-8 py-5 whitespace-nowrap">
-                        <div className="text-base font-bold text-green-600">${ganancia.precio.toFixed(2)}</div>
-                      </td>
-                      <td className="px-8 py-5 whitespace-nowrap">
-                        <div className="text-base font-semibold text-purple-700">${ganancia.costo.toFixed(2)}</div>
-                      </td>
-                      <td className="px-8 py-5 whitespace-nowrap">
-                        <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-bold bg-gradient-to-r from-purple-400 to-pink-400 text-white shadow-md">
-                          {ganancia.cantidad}
-                        </span>
-                      </td>
-                      <td className="px-8 py-5 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-bold shadow-md ${
-                          esNegativa
-                            ? 'bg-gradient-to-r from-red-400 to-pink-500 text-white'
-                            : esPositiva
-                            ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white'
-                            : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white'
-                        }`}>
-                          ${ganancia.gananciaPorUnidad}
-                        </span>
-                      </td>
-                      <td className="px-8 py-5 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-bold shadow-md ${
-                          esNegativa
-                            ? 'bg-gradient-to-r from-red-400 to-pink-500 text-white'
-                            : esPositiva
-                            ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white'
-                            : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white'
-                        }`}>
-                          ${ganancia.gananciaTotal}
-                        </span>
-                      </td>
-                      <td className="px-8 py-5 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-bold shadow-md ${
-                          esNegativa
-                            ? 'bg-gradient-to-r from-red-400 to-pink-500 text-white'
-                            : parseFloat(ganancia.rentabilidad) > 50
-                            ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white'
-                            : parseFloat(ganancia.rentabilidad) > 20
-                            ? 'bg-gradient-to-r from-purple-400 to-pink-400 text-white'
-                            : 'bg-gradient-to-r from-yellow-400 to-orange-400 text-white'
-                        }`}>
-                          {ganancia.rentabilidad}%
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                            ${ganancia.gananciaPorUnidad}
+                          </span>
+                        </td>
+                        <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap">
+                          <span className={`inline-flex items-center px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-bold shadow-md ${
+                            esNegativa
+                              ? 'bg-gradient-to-r from-red-400 to-pink-500 text-white'
+                              : esPositiva
+                              ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white'
+                              : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white'
+                          }`}>
+                            ${ganancia.gananciaTotal}
+                          </span>
+                        </td>
+                        <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap">
+                          <span className={`inline-flex items-center px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-bold shadow-md ${
+                            esNegativa
+                              ? 'bg-gradient-to-r from-red-400 to-pink-500 text-white'
+                              : parseFloat(ganancia.rentabilidad) > 50
+                              ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white'
+                              : parseFloat(ganancia.rentabilidad) > 20
+                              ? 'bg-gradient-to-r from-purple-400 to-pink-400 text-white'
+                              : 'bg-gradient-to-r from-yellow-400 to-orange-400 text-white'
+                          }`}>
+                            {ganancia.rentabilidad}%
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       )}
