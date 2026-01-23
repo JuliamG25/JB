@@ -143,7 +143,7 @@ export default function Inventario() {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-purple-600 mb-6"></div>
+          <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-gray-400 mb-6"></div>
           <p className="text-purple-700 text-xl font-bold">Cargando productos de belleza...</p>
         </div>
       </div>
@@ -155,7 +155,7 @@ export default function Inventario() {
       <div className="flex items-center justify-center py-20">
         <div className="text-center max-w-md">
           <div className="text-6xl mb-4">⚠️</div>
-          <h3 className="text-2xl font-bold text-red-600 mb-2">Error al cargar productos</h3>
+          <h3 className="text-2xl font-bold text-gray-600 mb-2">Error al cargar productos</h3>
           <p className="text-red-500 mb-4">{error}</p>
           <button
             onClick={() => {
@@ -163,7 +163,7 @@ export default function Inventario() {
               setLoading(true);
               cargarProductos();
             }}
-            className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-xl font-bold hover:from-purple-700 hover:to-pink-700 transition-all"
+            className="bg-gradient-to-r from-gray-400 to-gray-500 text-white px-6 py-3 rounded-xl font-bold hover:from-gray-500 hover:to-gray-600 transition-all"
           >
             Reintentar
           </button>
@@ -176,7 +176,7 @@ export default function Inventario() {
     <div className="space-y-6 px-2 sm:px-0">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8 gap-4">
         <div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-purple-600 via-pink-600 to-fuchsia-600 bg-clip-text text-transparent mb-2">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-gray-500 via-gray-400 to-gray-500 bg-clip-text text-transparent mb-2">
             💄 Inventario de Productos
           </h2>
           <p className="text-purple-700 mt-2 text-sm sm:text-base md:text-lg font-medium">Gestiona tu catálogo de productos de belleza</p>
@@ -186,7 +186,7 @@ export default function Inventario() {
             resetForm();
             setShowModal(true);
           }}
-          className="bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold hover:from-purple-700 hover:via-pink-600 hover:to-fuchsia-700 transition-all duration-300 shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 sm:hover:scale-110 flex items-center justify-center space-x-2 sm:space-x-3 border-2 border-white/30 backdrop-blur-sm w-full sm:w-auto"
+          className="bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold hover:from-gray-500 hover:via-gray-600 hover:to-gray-500 transition-all duration-300 shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 sm:hover:scale-110 flex items-center justify-center space-x-2 sm:space-x-3 border-2 border-white/30 backdrop-blur-sm w-full sm:w-auto"
         >
           <span className="text-xl sm:text-2xl">✨</span>
           <span className="text-sm sm:text-base md:text-lg">Nuevo Producto</span>
@@ -194,13 +194,13 @@ export default function Inventario() {
       </div>
 
       {productos.length === 0 ? (
-        <div className="text-center py-12 sm:py-16 md:py-24 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-dashed border-purple-300 px-4">
+        <div className="text-center py-12 sm:py-16 md:py-24 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-dashed border-gray-300 px-4">
           <div className="text-5xl sm:text-6xl md:text-7xl mb-4 sm:mb-6 animate-pulse">💄</div>
           <p className="text-purple-700 text-xl sm:text-2xl font-bold mb-2 sm:mb-3">No hay productos registrados</p>
-          <p className="text-pink-600 text-sm sm:text-base font-medium">Comienza agregando tu primer producto de belleza</p>
+          <p className="text-gray-500 text-sm sm:text-base font-medium">Comienza agregando tu primer producto de belleza</p>
         </div>
       ) : (
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border-2 border-purple-200/50">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border-2 border-gray-200/50">
           {/* Vista móvil: Cards */}
           <div className="block sm:hidden p-4 space-y-4">
             {productos.map((producto, index) => {
@@ -208,14 +208,14 @@ export default function Inventario() {
               return (
                 <div
                   key={producto._id}
-                  className="bg-gradient-to-r from-purple-50 via-pink-50 to-fuchsia-50 rounded-xl p-4 border-2 border-purple-200"
+                  className="bg-gradient-to-r from-purple-50 via-pink-50 to-fuchsia-50 rounded-xl p-4 border-2 border-gray-200"
                 >
                   <div className="flex items-center mb-3">
-                    <div className="flex-shrink-0 h-10 w-10 bg-gradient-to-br from-purple-500 via-pink-500 to-fuchsia-500 rounded-xl flex items-center justify-center text-white font-bold mr-3 shadow-lg">
+                    <div className="flex-shrink-0 h-10 w-10 bg-gradient-to-br from-gray-400 via-gray-500 to-gray-400 rounded-xl flex items-center justify-center text-white font-bold mr-3 shadow-lg">
                       {producto.nombre.charAt(0).toUpperCase()}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-bold text-purple-900 truncate">{producto.nombre}</div>
+                      <div className="text-sm font-bold text-gray-700 truncate">{producto.nombre}</div>
                       <div className="text-xs text-purple-500 font-medium">
                         {producto.codigoBarras ? `Código: ${producto.codigoBarras}` : `ID: ${producto._id?.slice(-6)}`}
                       </div>
@@ -224,7 +224,7 @@ export default function Inventario() {
                   <div className="grid grid-cols-2 gap-2 text-xs mb-3">
                     <div>
                       <span className="text-purple-600 font-semibold">Precio:</span>
-                      <span className="ml-1 text-green-600 font-bold">${producto.precio.toFixed(2)}</span>
+                      <span className="ml-1 text-gray-600 font-bold">${producto.precio.toFixed(2)}</span>
                     </div>
                     <div>
                       <span className="text-purple-600 font-semibold">Costo:</span>
@@ -234,29 +234,29 @@ export default function Inventario() {
                       <span className="text-purple-600 font-semibold">Stock:</span>
                       <span className={`ml-1 inline-flex items-center px-2 py-1 rounded-full text-xs font-bold shadow-md ${
                         producto.cantidad > 10
-                          ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white'
+                          ? 'bg-gradient-to-r from-gray-300 to-gray-400 text-white'
                           : producto.cantidad > 5
                           ? 'bg-gradient-to-r from-yellow-400 to-orange-400 text-white'
-                          : 'bg-gradient-to-r from-red-400 to-pink-500 text-white'
+                          : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white'
                       }`}>
                         {producto.cantidad} unidades
                       </span>
                     </div>
                     <div>
                       <span className="text-purple-600 font-semibold">Ganancia:</span>
-                      <span className="ml-1 text-green-600 font-bold">${ganancia.toFixed(2)}</span>
+                      <span className="ml-1 text-gray-600 font-bold">${ganancia.toFixed(2)}</span>
                     </div>
                   </div>
-                  <div className="flex gap-2 pt-3 border-t border-purple-200">
+                  <div className="flex gap-2 pt-3 border-t border-gray-200">
                     <button
                       onClick={() => handleEdit(producto)}
-                      className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-2 rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold text-xs sm:text-sm"
+                      className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-2 rounded-lg hover:from-gray-500 hover:to-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold text-xs sm:text-sm"
                     >
                       ✏️ Editar
                     </button>
                     <button
                       onClick={() => handleDelete(producto._id!)}
-                      className="flex-1 bg-gradient-to-r from-red-400 to-pink-500 text-white px-3 py-2 rounded-lg hover:from-red-500 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold text-xs sm:text-sm"
+                      className="flex-1 bg-gradient-to-r from-gray-400 to-gray-500 text-white px-3 py-2 rounded-lg hover:from-gray-500 hover:to-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold text-xs sm:text-sm"
                     >
                       🗑️ Eliminar
                     </button>
@@ -268,8 +268,8 @@ export default function Inventario() {
           {/* Vista desktop: Tabla */}
           <div className="hidden sm:block overflow-x-auto -mx-4 sm:mx-0">
             <div className="inline-block min-w-full align-middle">
-              <table className="min-w-full divide-y divide-purple-100">
-                <thead className="bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gradient-to-r from-gray-400 via-gray-500 to-gray-400">
                   <tr>
                     <th className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 text-left text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
                       💋 Producto
@@ -288,22 +288,22 @@ export default function Inventario() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white/50 divide-y divide-purple-100">
+                <tbody className="bg-white/50 divide-y divide-gray-200">
                   {productos.map((producto, index) => {
                     const ganancia = producto.precio - producto.costo;
                     return (
                       <tr
                         key={producto._id}
-                        className="hover:bg-gradient-to-r hover:from-purple-50 hover:via-pink-50 hover:to-fuchsia-50 transition-all duration-300 group"
+                        className="hover:bg-gradient-to-r hover:from-gray-50 hover:via-gray-100 hover:to-gray-50 transition-all duration-300 group"
                         style={{ animationDelay: `${index * 50}ms` }}
                       >
                         <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap">
                           <div className="flex items-center">
-                            <div className="flex-shrink-0 h-10 w-10 sm:h-12 sm:w-12 bg-gradient-to-br from-purple-500 via-pink-500 to-fuchsia-500 rounded-xl sm:rounded-2xl flex items-center justify-center text-white font-bold mr-3 sm:mr-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <div className="flex-shrink-0 h-10 w-10 sm:h-12 sm:w-12 bg-gradient-to-br from-gray-400 via-gray-500 to-gray-400 rounded-xl sm:rounded-2xl flex items-center justify-center text-white font-bold mr-3 sm:mr-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
                               {producto.nombre.charAt(0).toUpperCase()}
                             </div>
                             <div>
-                              <div className="text-sm sm:text-base font-bold text-purple-900">{producto.nombre}</div>
+                              <div className="text-sm sm:text-base font-bold text-gray-700">{producto.nombre}</div>
                               <div className="text-xs text-purple-500 font-medium">
                                 {producto.codigoBarras ? `Código: ${producto.codigoBarras}` : `ID: ${producto._id?.slice(-6)}`}
                               </div>
@@ -311,7 +311,7 @@ export default function Inventario() {
                           </div>
                         </td>
                         <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap">
-                          <div className="text-sm sm:text-base font-bold text-green-600">${producto.precio.toFixed(2)}</div>
+                          <div className="text-sm sm:text-base font-bold text-gray-600">${producto.precio.toFixed(2)}</div>
                         </td>
                         <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap">
                           <div className="text-sm sm:text-base font-medium text-gray-600">${producto.costo.toFixed(2)}</div>
@@ -319,10 +319,10 @@ export default function Inventario() {
                         <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap">
                           <span className={`inline-flex items-center px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-bold shadow-md ${
                             producto.cantidad > 10
-                              ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white'
+                              ? 'bg-gradient-to-r from-gray-300 to-gray-400 text-white'
                               : producto.cantidad > 5
                               ? 'bg-gradient-to-r from-yellow-400 to-orange-400 text-white'
-                              : 'bg-gradient-to-r from-red-400 to-pink-500 text-white'
+                              : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white'
                           }`}>
                             {producto.cantidad} unidades
                           </span>
@@ -331,13 +331,13 @@ export default function Inventario() {
                           <div className="flex items-center space-x-2 sm:space-x-3">
                             <button
                               onClick={() => handleEdit(producto)}
-                              className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110 font-semibold text-xs sm:text-sm"
+                              className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl hover:from-gray-500 hover:to-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110 font-semibold text-xs sm:text-sm"
                             >
                               ✏️ Editar
                             </button>
                             <button
                               onClick={() => handleDelete(producto._id!)}
-                              className="bg-gradient-to-r from-red-400 to-pink-500 text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl hover:from-red-500 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110 font-semibold text-xs sm:text-sm"
+                              className="bg-gradient-to-r from-gray-400 to-gray-500 text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl hover:from-gray-500 hover:to-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110 font-semibold text-xs sm:text-sm"
                             >
                               🗑️ Eliminar
                             </button>
@@ -355,8 +355,8 @@ export default function Inventario() {
 
       {showModal && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-2 sm:p-4 animate-fadeIn overflow-y-auto">
-          <div className="bg-white/95 backdrop-blur-lg rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-md my-2 sm:my-4 transform transition-all animate-slideUp border-2 border-purple-200/50 max-h-[95vh] sm:max-h-[calc(100vh-200px)] overflow-y-auto">
-            <div className="bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 px-4 sm:px-6 py-3 sm:py-4 rounded-t-xl sm:rounded-t-2xl border-b-2 border-purple-400/30 sticky top-0 z-10">
+          <div className="bg-white/95 backdrop-blur-lg rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-md my-2 sm:my-4 transform transition-all animate-slideUp border-2 border-gray-200/50 max-h-[95vh] sm:max-h-[calc(100vh-200px)] overflow-y-auto">
+            <div className="bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 px-4 sm:px-6 py-3 sm:py-4 rounded-t-xl sm:rounded-t-2xl border-b-2 border-gray-300/30 sticky top-0 z-10">
               <h3 className="text-xl sm:text-2xl font-bold text-white flex items-center space-x-2">
                 <span className="text-2xl sm:text-3xl">{editingProducto ? '✨' : '💄'}</span>
                 <span>{editingProducto ? 'Editar Producto' : 'Nuevo Producto'}</span>
@@ -364,7 +364,7 @@ export default function Inventario() {
             </div>
             <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-3 sm:space-y-4">
               <div>
-                <label className="block text-xs sm:text-sm font-bold text-purple-800 mb-1 sm:mb-2 flex items-center space-x-2">
+                <label className="block text-xs sm:text-sm font-bold text-gray-600 mb-1 sm:mb-2 flex items-center space-x-2">
                   <span>💋</span>
                   <span>Nombre del Producto</span>
                 </label>
@@ -373,13 +373,13 @@ export default function Inventario() {
                   required
                   value={formData.nombre}
                   onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-purple-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 text-sm sm:text-base font-medium placeholder-purple-300"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-gray-400 transition-all duration-300 text-sm sm:text-base font-medium placeholder-purple-300"
                   placeholder="Ej: Labial Rojo Premium"
                 />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <label className="block text-xs sm:text-sm font-bold text-purple-800 mb-1 sm:mb-2 flex items-center space-x-2">
+                  <label className="block text-xs sm:text-sm font-bold text-gray-600 mb-1 sm:mb-2 flex items-center space-x-2">
                     <span>💰</span>
                     <span>Precio ($)</span>
                   </label>
@@ -390,12 +390,12 @@ export default function Inventario() {
                     required
                     value={formData.precio}
                     onChange={(e) => setFormData({ ...formData, precio: parseFloat(e.target.value) || 0 })}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-green-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-green-300 focus:border-green-500 transition-all duration-300 text-sm sm:text-base font-medium placeholder-green-300"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-green-300 focus:border-green-500 transition-all duration-300 text-sm sm:text-base font-medium placeholder-gray-300"
                     placeholder="0.00"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs sm:text-sm font-bold text-purple-800 mb-1 sm:mb-2 flex items-center space-x-2">
+                  <label className="block text-xs sm:text-sm font-bold text-gray-600 mb-1 sm:mb-2 flex items-center space-x-2">
                     <span>📊</span>
                     <span>Costo ($)</span>
                   </label>
@@ -406,14 +406,14 @@ export default function Inventario() {
                     required
                     value={formData.costo}
                     onChange={(e) => setFormData({ ...formData, costo: parseFloat(e.target.value) || 0 })}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-pink-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-500 transition-all duration-300 text-sm sm:text-base font-medium placeholder-pink-300"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-pink-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-gray-400 transition-all duration-300 text-sm sm:text-base font-medium placeholder-pink-300"
                     placeholder="0.00"
                   />
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <label className="block text-xs sm:text-sm font-bold text-purple-800 mb-1 sm:mb-2 flex items-center space-x-2">
+                  <label className="block text-xs sm:text-sm font-bold text-gray-600 mb-1 sm:mb-2 flex items-center space-x-2">
                     <span>📦</span>
                     <span>Cantidad</span>
                   </label>
@@ -423,12 +423,12 @@ export default function Inventario() {
                     required
                     value={formData.cantidad}
                     onChange={(e) => setFormData({ ...formData, cantidad: parseInt(e.target.value) || 0 })}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-purple-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 text-sm sm:text-base font-medium placeholder-purple-300"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-gray-400 transition-all duration-300 text-sm sm:text-base font-medium placeholder-purple-300"
                     placeholder="0"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs sm:text-sm font-bold text-purple-800 mb-1 sm:mb-2 flex items-center space-x-2">
+                  <label className="block text-xs sm:text-sm font-bold text-gray-600 mb-1 sm:mb-2 flex items-center space-x-2">
                     <span>📊</span>
                     <span>Código Barras</span>
                   </label>
@@ -445,13 +445,13 @@ export default function Inventario() {
                         }
                       }
                     }}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-purple-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 text-sm sm:text-base font-medium placeholder-purple-300"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-gray-400 transition-all duration-300 text-sm sm:text-base font-medium placeholder-purple-300"
                     placeholder="Opcional"
                   />
                 </div>
               </div>
               {formData.precio > 0 && formData.costo > 0 && (
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-lg sm:rounded-xl p-2 sm:p-3 shadow-lg">
+                <div className="bg-gradient-to-r from-gray-50 to-gray-100 border-2 border-gray-300 rounded-lg sm:rounded-xl p-2 sm:p-3 shadow-lg">
                   <p className="text-xs sm:text-sm text-green-800 font-bold">
                     <span className="flex flex-wrap items-center gap-1 sm:gap-2">
                       <span>✨</span>
@@ -460,20 +460,20 @@ export default function Inventario() {
                   </p>
                 </div>
               )}
-              <div className="flex flex-col sm:flex-row sm:justify-end gap-2 sm:gap-3 pt-3 sm:pt-4 border-t-2 border-purple-100">
+              <div className="flex flex-col sm:flex-row sm:justify-end gap-2 sm:gap-3 pt-3 sm:pt-4 border-t-2 border-gray-200">
                 <button
                   type="button"
                   onClick={() => {
                     setShowModal(false);
                     resetForm();
                   }}
-                  className="px-5 sm:px-6 py-2 sm:py-2.5 border-2 border-purple-300 rounded-lg sm:rounded-xl text-purple-700 font-bold hover:bg-purple-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 text-xs sm:text-sm w-full sm:w-auto"
+                  className="px-5 sm:px-6 py-2 sm:py-2.5 border-2 border-gray-300 rounded-lg sm:rounded-xl text-purple-700 font-bold hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 text-xs sm:text-sm w-full sm:w-auto"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="px-5 sm:px-6 py-2 sm:py-2.5 bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 text-white rounded-lg sm:rounded-xl font-bold hover:from-purple-700 hover:via-pink-600 hover:to-fuchsia-700 transition-all duration-300 shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 sm:hover:scale-110 flex items-center justify-center space-x-2 text-xs sm:text-sm w-full sm:w-auto"
+                  className="px-5 sm:px-6 py-2 sm:py-2.5 bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 text-white rounded-lg sm:rounded-xl font-bold hover:from-gray-500 hover:via-gray-600 hover:to-gray-500 transition-all duration-300 shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 sm:hover:scale-110 flex items-center justify-center space-x-2 text-xs sm:text-sm w-full sm:w-auto"
                 >
                   <span>{editingProducto ? '💾' : '✨'}</span>
                   <span>{editingProducto ? 'Actualizar' : 'Crear'}</span>

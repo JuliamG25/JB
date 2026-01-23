@@ -135,19 +135,19 @@ export default function Layout({ children }: LayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-fuchsia-50">
-      <nav className="bg-gradient-to-r from-purple-600 via-purple-700 to-pink-600 text-white shadow-2xl sticky top-0 z-50 backdrop-blur-md border-b border-purple-400/20">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
+      <nav className="bg-gradient-to-r from-gray-400 via-gray-500 to-gray-500 text-white shadow-2xl sticky top-0 z-50 backdrop-blur-md border-b border-purple-400/20">
         <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center h-auto sm:h-24 py-3 sm:py-0">
             <div className="flex items-center space-x-2 sm:space-x-4 mb-3 sm:mb-0 w-full sm:w-auto">
-              <div className="bg-gradient-to-br from-pink-400 to-purple-500 p-2 sm:p-3 rounded-xl sm:rounded-2xl shadow-lg backdrop-blur-sm border border-white/30">
+              <div className="bg-gradient-to-br from-gray-300 to-gray-400 p-2 sm:p-3 rounded-xl sm:rounded-2xl shadow-lg backdrop-blur-sm border border-white/30">
                 <span className="text-2xl sm:text-3xl md:text-4xl">💄</span>
               </div>
               <div>
                 <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-white to-pink-100 bg-clip-text text-transparent">
                   Beauty Inventory
                 </h1>
-                <p className="text-xs sm:text-sm text-purple-100 opacity-95 font-medium mt-0.5 hidden sm:block">Gestión de productos de belleza</p>
+                <p className="text-xs sm:text-sm text-gray-100 opacity-95 font-medium mt-0.5 hidden sm:block">Gestión de productos de belleza</p>
               </div>
             </div>
             <div className="grid grid-cols-2 sm:flex sm:space-x-2 lg:space-x-3 items-center w-full sm:w-auto gap-2 sm:gap-0">
@@ -157,14 +157,14 @@ export default function Layout({ children }: LayoutProps) {
                   href={item.href}
                   className={`px-3 sm:px-4 lg:px-5 py-2 sm:py-2.5 lg:py-3 rounded-lg sm:rounded-xl font-semibold transition-all duration-300 flex items-center justify-center space-x-1 sm:space-x-2 relative overflow-hidden group text-sm sm:text-base ${
                     isActive(item.href)
-                      ? 'bg-white text-purple-700 shadow-xl scale-105 ring-2 ring-purple-300'
+                      ? 'bg-white text-purple-700 shadow-xl scale-105 ring-2 ring-gray-300'
                       : 'hover:bg-white/25 hover:scale-105 text-white hover:shadow-lg'
                   }`}
                 >
                   <span className="relative z-10 text-lg sm:text-xl">{item.icon}</span>
                   <span className="relative z-10 hidden sm:inline">{item.label}</span>
                   {isActive(item.href) && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-100 to-pink-100 opacity-50"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-200 opacity-50"></div>
                   )}
                 </a>
               ))}
@@ -179,8 +179,8 @@ export default function Layout({ children }: LayoutProps) {
       {/* Modal de ayuda de atajos */}
       {showShortcuts && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-2 sm:p-4 animate-fadeIn">
-          <div className="bg-white/95 backdrop-blur-lg rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto transform transition-all animate-slideUp border-2 border-purple-200/50">
-            <div className="bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 px-4 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6 rounded-t-2xl sm:rounded-t-3xl border-b-2 border-purple-400/30 sticky top-0 z-10">
+          <div className="bg-white/95 backdrop-blur-lg rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto transform transition-all animate-slideUp border-2 border-gray-200/50">
+            <div className="bg-gradient-to-r from-gray-400 via-gray-500 to-gray-400 px-4 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6 rounded-t-2xl sm:rounded-t-3xl border-b-2 border-purple-400/30 sticky top-0 z-10">
               <div className="flex justify-between items-center">
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white flex items-center space-x-2 sm:space-x-3">
                   <span className="text-2xl sm:text-3xl md:text-4xl">⌨️</span>
@@ -188,7 +188,7 @@ export default function Layout({ children }: LayoutProps) {
                 </h3>
                 <button
                   onClick={() => setShowShortcuts(false)}
-                  className="text-white hover:text-pink-200 transition-colors duration-200 text-xl sm:text-2xl font-bold w-8 h-8 sm:w-10 sm:h-10 rounded-full hover:bg-white/20 flex items-center justify-center"
+                  className="text-white hover:text-gray-200 transition-colors duration-200 text-xl sm:text-2xl font-bold w-8 h-8 sm:w-10 sm:h-10 rounded-full hover:bg-white/20 flex items-center justify-center"
                 >
                   ✕
                 </button>
@@ -196,46 +196,46 @@ export default function Layout({ children }: LayoutProps) {
             </div>
             <div className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl sm:rounded-2xl p-4 sm:p-5 border-2 border-purple-200">
+                <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl sm:rounded-2xl p-4 sm:p-5 border-2 border-gray-200">
                   <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
                     <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 sm:px-3 py-1 rounded-lg font-bold text-sm sm:text-base md:text-lg">1</span>
                     <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 sm:px-3 py-1 rounded-lg font-bold text-sm sm:text-base md:text-lg">I</span>
-                    <span className="text-purple-800 font-bold text-sm sm:text-base md:text-lg">Inventario</span>
+                    <span className="text-gray-600 font-bold text-sm sm:text-base md:text-lg">Inventario</span>
                   </div>
                 </div>
-                <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl sm:rounded-2xl p-4 sm:p-5 border-2 border-purple-200">
+                <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl sm:rounded-2xl p-4 sm:p-5 border-2 border-gray-200">
                   <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
                     <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 sm:px-3 py-1 rounded-lg font-bold text-sm sm:text-base md:text-lg">2</span>
                     <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 sm:px-3 py-1 rounded-lg font-bold text-sm sm:text-base md:text-lg">E</span>
-                    <span className="text-purple-800 font-bold text-sm sm:text-base md:text-lg">Entradas</span>
+                    <span className="text-gray-600 font-bold text-sm sm:text-base md:text-lg">Entradas</span>
                   </div>
                 </div>
-                <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl sm:rounded-2xl p-4 sm:p-5 border-2 border-purple-200">
+                <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl sm:rounded-2xl p-4 sm:p-5 border-2 border-gray-200">
                   <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
                     <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 sm:px-3 py-1 rounded-lg font-bold text-sm sm:text-base md:text-lg">3</span>
                     <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 sm:px-3 py-1 rounded-lg font-bold text-sm sm:text-base md:text-lg">S</span>
-                    <span className="text-purple-800 font-bold text-sm sm:text-base md:text-lg">Salidas</span>
+                    <span className="text-gray-600 font-bold text-sm sm:text-base md:text-lg">Salidas</span>
                   </div>
                 </div>
-                <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl sm:rounded-2xl p-4 sm:p-5 border-2 border-purple-200">
+                <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl sm:rounded-2xl p-4 sm:p-5 border-2 border-gray-200">
                   <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
                     <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 sm:px-3 py-1 rounded-lg font-bold text-sm sm:text-base md:text-lg">4</span>
                     <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 sm:px-3 py-1 rounded-lg font-bold text-sm sm:text-base md:text-lg">G</span>
-                    <span className="text-purple-800 font-bold text-sm sm:text-base md:text-lg">Ganancias</span>
+                    <span className="text-gray-600 font-bold text-sm sm:text-base md:text-lg">Ganancias</span>
                   </div>
                 </div>
               </div>
-              <div className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-xl sm:rounded-2xl p-4 sm:p-5 border-2 border-pink-200 mt-3 sm:mt-4">
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl sm:rounded-2xl p-4 sm:p-5 border-2 border-pink-200 mt-3 sm:mt-4">
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
-                  <span className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-2 sm:px-3 py-1 rounded-lg font-bold text-sm sm:text-base md:text-lg">?</span>
-                  <span className="text-purple-800 font-bold text-sm sm:text-base md:text-lg">Mostrar/Ocultar ayuda</span>
+                  <span className="bg-gradient-to-r from-gray-400 to-gray-500 text-white px-2 sm:px-3 py-1 rounded-lg font-bold text-sm sm:text-base md:text-lg">?</span>
+                  <span className="text-gray-600 font-bold text-sm sm:text-base md:text-lg">Mostrar/Ocultar ayuda</span>
                 </div>
                 <p className="text-purple-600 text-xs sm:text-sm mt-2 ml-0 sm:ml-12">Presiona ESC para cerrar este modal</p>
               </div>
               <div className="flex justify-end pt-3 sm:pt-4 border-t-2 border-purple-100">
                 <button
                   onClick={() => setShowShortcuts(false)}
-                  className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 text-white rounded-xl sm:rounded-2xl font-bold hover:from-purple-700 hover:via-pink-600 hover:to-fuchsia-700 transition-all duration-300 shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 sm:hover:scale-110 text-sm sm:text-base w-full sm:w-auto"
+                  className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-gray-400 via-gray-500 to-gray-400 text-white rounded-xl sm:rounded-2xl font-bold hover:from-gray-500 hover:via-gray-600 hover:to-gray-500 transition-all duration-300 shadow-2xl hover:shadow-gray-400/50 transform hover:scale-105 sm:hover:scale-110 text-sm sm:text-base w-full sm:w-auto"
                 >
                   Cerrar
                 </button>

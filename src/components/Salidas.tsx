@@ -299,7 +299,7 @@ export default function Salidas() {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-600 mb-4"></div>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-400 mb-4"></div>
           <p className="text-gray-600 text-lg font-medium">Cargando salidas...</p>
         </div>
       </div>
@@ -311,15 +311,15 @@ export default function Salidas() {
       <div className="flex items-center justify-center py-20">
         <div className="text-center max-w-md">
           <div className="text-6xl mb-4">⚠️</div>
-          <h3 className="text-2xl font-bold text-red-600 mb-2">Error al cargar datos</h3>
-          <p className="text-red-500 mb-4">{error}</p>
+          <h3 className="text-2xl font-bold text-gray-600 mb-2">Error al cargar datos</h3>
+          <p className="text-gray-500 mb-4">{error}</p>
           <button
             onClick={() => {
               setError(null);
               setLoading(true);
               cargarDatos();
             }}
-            className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-xl font-bold hover:from-purple-700 hover:to-pink-700 transition-all"
+            className="bg-gradient-to-r from-gray-400 to-gray-500 text-white px-6 py-3 rounded-xl font-bold hover:from-gray-500 hover:to-gray-600 transition-all"
           >
             Reintentar
           </button>
@@ -332,14 +332,14 @@ export default function Salidas() {
     <div className="space-y-6 px-2 sm:px-0">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8 gap-4">
         <div>
-          <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-gray-500 to-gray-400 bg-clip-text text-transparent">
             📤 Salidas / Ventas
           </h2>
           <p className="text-gray-600 mt-2 text-sm sm:text-base">Registra las ventas y salidas de productos</p>
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 sm:px-6 py-3 rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 sm:hover:scale-110 flex items-center justify-center space-x-2 w-full sm:w-auto"
+          className="bg-gradient-to-r from-gray-400 to-gray-500 text-white px-4 sm:px-6 py-3 rounded-xl font-semibold hover:from-gray-500 hover:to-gray-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 sm:hover:scale-110 flex items-center justify-center space-x-2 w-full sm:w-auto"
         >
           <span className="text-lg sm:text-xl">+</span>
           <span className="text-sm sm:text-base">Nueva Salida</span>
@@ -357,10 +357,10 @@ export default function Salidas() {
           {salidas.map((salida) => {
             const totalSalida = salida.productos.reduce((sum, item) => sum + (item.cantidad * item.precio), 0);
             return (
-              <div key={salida._id} className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-8 border-2 border-purple-200/50 hover:shadow-purple-500/30 transition-all duration-300 transform hover:scale-[1.01] sm:hover:scale-[1.02]">
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6 md:mb-8 pb-4 sm:pb-6 border-b-2 border-purple-100 gap-3">
+              <div key={salida._id} className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-8 border-2 border-gray-200/50 hover:shadow-gray-400/30 transition-all duration-300 transform hover:scale-[1.01] sm:hover:scale-[1.02]">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6 md:mb-8 pb-4 sm:pb-6 border-b-2 border-gray-200 gap-3">
                   <div>
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-purple-900 flex items-center space-x-2 sm:space-x-3">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-700 flex items-center space-x-2 sm:space-x-3">
                       <span className="text-2xl sm:text-3xl">📅</span>
                       <span className="break-words">{new Date(salida.fecha).toLocaleDateString('es-ES', { 
                         year: 'numeric', 
@@ -368,35 +368,35 @@ export default function Salidas() {
                         day: 'numeric' 
                       })}</span>
                     </h3>
-                    <p className="text-xs sm:text-sm text-purple-600 mt-1 sm:mt-2 font-semibold">
+                    <p className="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2 font-semibold">
                       {salida.productos.length} producto{salida.productos.length > 1 ? 's' : ''} vendido{salida.productos.length > 1 ? 's' : ''}
                     </p>
                   </div>
-                  <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-lg sm:text-xl shadow-xl w-full sm:w-auto text-center">
+                  <div className="bg-gradient-to-r from-gray-400 via-gray-500 to-gray-400 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-lg sm:text-xl shadow-xl w-full sm:w-auto text-center">
                     Total: ${totalSalida.toFixed(2)}
                   </div>
                 </div>
                 {/* Vista móvil: Cards */}
                 <div className="block sm:hidden space-y-3">
                   {salida.productos.map((item, idx) => (
-                    <div key={idx} className="bg-gradient-to-r from-purple-50 via-pink-50 to-fuchsia-50 rounded-xl p-4 border-2 border-purple-200">
-                      <div className="font-bold text-purple-900 text-base mb-2">
+                    <div key={idx} className="bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 rounded-xl p-4 border-2 border-gray-200">
+                      <div className="font-bold text-gray-700 text-base mb-2">
                         {typeof item.producto === 'object' ? item.producto.nombre : 'N/A'}
                       </div>
                       <div className="grid grid-cols-2 gap-2 text-sm">
                         <div>
-                          <span className="text-purple-600 font-semibold">Cantidad:</span>
-                          <span className="ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-purple-400 to-pink-400 text-white">
+                          <span className="text-gray-500 font-semibold">Cantidad:</span>
+                          <span className="ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-gray-300 to-gray-400 text-white">
                             {item.cantidad} unidades
                           </span>
                         </div>
                         <div>
-                          <span className="text-purple-600 font-semibold">Precio:</span>
-                          <span className="ml-2 text-purple-700 font-semibold">${item.precio.toFixed(2)}</span>
+                          <span className="text-gray-500 font-semibold">Precio:</span>
+                          <span className="ml-2 text-gray-600 font-semibold">${item.precio.toFixed(2)}</span>
                         </div>
-                        <div className="col-span-2 pt-2 border-t border-purple-200">
-                          <span className="text-purple-600 font-semibold">Total:</span>
-                          <span className="ml-2 text-green-600 font-bold text-base">${(item.cantidad * item.precio).toFixed(2)}</span>
+                        <div className="col-span-2 pt-2 border-t border-gray-200">
+                          <span className="text-gray-500 font-semibold">Total:</span>
+                          <span className="ml-2 text-gray-600 font-bold text-base">${(item.cantidad * item.precio).toFixed(2)}</span>
                         </div>
                       </div>
                     </div>
@@ -405,8 +405,8 @@ export default function Salidas() {
                 {/* Vista desktop: Tabla */}
                 <div className="hidden sm:block overflow-x-auto -mx-4 sm:mx-0">
                   <div className="inline-block min-w-full align-middle">
-                    <table className="min-w-full divide-y divide-purple-100">
-                      <thead className="bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500">
+                    <table className="min-w-full divide-y divide-gray-200">
+                      <thead className="bg-gradient-to-r from-gray-400 via-gray-500 to-gray-400">
                         <tr>
                           <th className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 text-left text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
                             💋 Producto
@@ -422,23 +422,23 @@ export default function Salidas() {
                           </th>
                         </tr>
                       </thead>
-                      <tbody className="bg-white/50 divide-y divide-purple-100">
+                      <tbody className="bg-white/50 divide-y divide-gray-200">
                         {salida.productos.map((item, idx) => (
-                          <tr key={idx} className="hover:bg-gradient-to-r hover:from-purple-50 hover:via-pink-50 hover:to-fuchsia-50 transition-all duration-300">
+                          <tr key={idx} className="hover:bg-gradient-to-r hover:from-gray-50 hover:via-gray-100 hover:to-gray-50 transition-all duration-300">
                             <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap">
-                              <div className="text-sm sm:text-base font-bold text-purple-900">
+                              <div className="text-sm sm:text-base font-bold text-gray-700">
                                 {typeof item.producto === 'object' ? item.producto.nombre : 'N/A'}
                               </div>
                             </td>
                             <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap">
-                              <span className="inline-flex items-center px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-bold bg-gradient-to-r from-purple-400 to-pink-400 text-white shadow-md">
+                              <span className="inline-flex items-center px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-bold bg-gradient-to-r from-gray-300 to-gray-400 text-white shadow-md">
                                 {item.cantidad} unidades
                               </span>
                             </td>
-                            <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap text-sm sm:text-base font-semibold text-purple-700">
+                            <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap text-sm sm:text-base font-semibold text-gray-600">
                               ${item.precio.toFixed(2)}
                             </td>
-                            <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap text-sm sm:text-base font-bold text-green-600">
+                            <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap text-sm sm:text-base font-bold text-gray-600">
                               ${(item.cantidad * item.precio).toFixed(2)}
                             </td>
                           </tr>
@@ -455,8 +455,8 @@ export default function Salidas() {
 
       {showModal && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-2 sm:p-4">
-          <div className="bg-white/95 backdrop-blur-lg rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto transform transition-all border-2 border-purple-200/50">
-            <div className="bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 px-4 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6 rounded-t-2xl sm:rounded-t-3xl sticky top-0 z-10 border-b-2 border-purple-400/30">
+          <div className="bg-white/95 backdrop-blur-lg rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto transform transition-all border-2 border-gray-200/50">
+            <div className="bg-gradient-to-r from-gray-400 via-gray-500 to-gray-400 px-4 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6 rounded-t-2xl sm:rounded-t-3xl sticky top-0 z-10 border-b-2 border-gray-300/30">
               <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white flex items-center space-x-2 sm:space-x-3">
                 <span className="text-2xl sm:text-3xl md:text-4xl">📤</span>
                 <span>Nueva Venta / Salida</span>
@@ -464,7 +464,7 @@ export default function Salidas() {
             </div>
             <form onSubmit={handleSubmit} className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 md:space-y-8">
               <div>
-                <label className="block text-sm sm:text-base font-bold text-purple-800 mb-2 sm:mb-3 flex items-center space-x-2">
+                <label className="block text-sm sm:text-base font-bold text-gray-600 mb-2 sm:mb-3 flex items-center space-x-2">
                   <span>📅</span>
                   <span>Fecha de Venta</span>
                 </label>
@@ -473,20 +473,20 @@ export default function Salidas() {
                   required
                   value={fecha}
                   onChange={(e) => setFecha(e.target.value)}
-                  className="w-full px-3 sm:px-4 md:px-5 py-3 sm:py-4 border-2 border-purple-200 rounded-xl sm:rounded-2xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 text-sm sm:text-base md:text-lg font-medium"
+                  className="w-full px-3 sm:px-4 md:px-5 py-3 sm:py-4 border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:outline-none focus:ring-4 focus:ring-gray-300 focus:border-gray-400 transition-all duration-300 text-sm sm:text-base md:text-lg font-medium"
                 />
               </div>
 
               <div>
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3 sm:mb-4 gap-3">
-                  <label className="block text-sm sm:text-base font-bold text-purple-800 flex items-center space-x-2">
+                  <label className="block text-sm sm:text-base font-bold text-gray-600 flex items-center space-x-2">
                     <span>💋</span>
                     <span>Productos Vendidos</span>
                   </label>
                   <button
                     type="button"
                     onClick={agregarItem}
-                    className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 sm:hover:scale-110 font-bold flex items-center justify-center space-x-2 w-full sm:w-auto text-sm sm:text-base"
+                    className="bg-gradient-to-r from-gray-400 to-gray-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl hover:from-gray-500 hover:to-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 sm:hover:scale-110 font-bold flex items-center justify-center space-x-2 w-full sm:w-auto text-sm sm:text-base"
                   >
                     <span className="text-lg sm:text-xl">✨</span>
                     <span>Agregar Producto</span>
@@ -494,16 +494,16 @@ export default function Salidas() {
                 </div>
 
                 {items.length === 0 && (
-                  <div className="text-center py-8 sm:py-12 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl sm:rounded-2xl border-2 border-dashed border-purple-300 px-4">
-                    <p className="text-purple-700 text-sm sm:text-base font-bold">No hay productos agregados</p>
-                    <p className="text-pink-600 text-xs sm:text-sm mt-2 font-medium">Haz clic en "Agregar Producto" para comenzar</p>
+                  <div className="text-center py-8 sm:py-12 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl sm:rounded-2xl border-2 border-dashed border-gray-300 px-4">
+                    <p className="text-gray-600 text-sm sm:text-base font-bold">No hay productos agregados</p>
+                    <p className="text-gray-500 text-xs sm:text-sm mt-2 font-medium">Haz clic en "Agregar Producto" para comenzar</p>
                   </div>
                 )}
 
                 <div className="space-y-3">
                   {/* Encabezado de la tabla - Solo visible en desktop */}
                   {items.length > 0 && (
-                    <div className="hidden sm:grid grid-cols-12 gap-2 sm:gap-3 px-2 sm:px-4 py-2 sm:py-3 bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500 rounded-lg sm:rounded-xl text-white font-bold text-xs sm:text-sm">
+                    <div className="hidden sm:grid grid-cols-12 gap-2 sm:gap-3 px-2 sm:px-4 py-2 sm:py-3 bg-gradient-to-r from-gray-400 via-gray-500 to-gray-400 rounded-lg sm:rounded-xl text-white font-bold text-xs sm:text-sm">
                       <div className="col-span-4">💋 Producto</div>
                       <div className="col-span-2">📦 Cantidad</div>
                       <div className="col-span-2">💰 Precio</div>
@@ -520,7 +520,7 @@ export default function Salidas() {
                     return (
                       <div 
                         key={index} 
-                        className="bg-gradient-to-r from-purple-50 via-pink-50 to-fuchsia-50 border-2 border-purple-200 rounded-xl hover:shadow-lg transition-all duration-300"
+                        className="bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 border-2 border-gray-200 rounded-xl hover:shadow-lg transition-all duration-300"
                       >
                         {/* Vista móvil: Stack vertical */}
                         <div className="block sm:hidden p-3 space-y-3">
@@ -529,7 +529,7 @@ export default function Salidas() {
                             <button
                               type="button"
                               onClick={() => eliminarItem(index)}
-                              className="text-red-500 hover:text-red-700 transition-colors duration-200 text-lg font-bold"
+                              className="text-gray-500 hover:text-gray-700 transition-colors duration-200 text-lg font-bold"
                               title="Eliminar renglón"
                             >
                               🗑️
@@ -565,7 +565,7 @@ export default function Salidas() {
                               }}
                               data-row={index}
                               data-field="producto"
-                              className="w-full px-3 py-2 text-sm border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
+                              className="w-full px-3 py-2 text-sm border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-gray-400 transition-all duration-300 font-medium bg-white"
                               placeholder="Buscar producto..."
                               autoComplete="off"
                             />
@@ -575,10 +575,10 @@ export default function Salidas() {
                                   <div
                                     key={producto._id}
                                     onClick={() => seleccionarProducto(index, producto)}
-                                    className="px-3 py-2 hover:bg-gradient-to-r hover:from-purple-50 hover:via-pink-50 hover:to-fuchsia-50 cursor-pointer transition-all duration-200 border-b border-purple-100 last:border-b-0"
+                                    className="px-3 py-2 hover:bg-gradient-to-r hover:from-purple-50 hover:via-pink-50 hover:to-fuchsia-50 cursor-pointer transition-all duration-200 border-b border-gray-100 last:border-b-0"
                                   >
                                     <div className="font-bold text-purple-900 text-sm">{producto.nombre}</div>
-                                    <div className="text-xs text-purple-600 mt-1">
+                                    <div className="text-xs text-gray-500 mt-1">
                                       Stock: {producto.cantidad} | Precio: ${producto.precio.toFixed(2)}
                                       {producto.codigoBarras && ` | Código: ${producto.codigoBarras}`}
                                     </div>
@@ -601,7 +601,7 @@ export default function Salidas() {
                                 }
                                 data-row={index}
                                 data-field="cantidad"
-                                className="w-full px-3 py-2 text-sm border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
+                                className="w-full px-3 py-2 text-sm border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-gray-400 transition-all duration-300 font-medium bg-white"
                                 placeholder="Cantidad"
                                 title={`Máximo: ${stockDisponible}`}
                               />
@@ -619,7 +619,7 @@ export default function Salidas() {
                                 }
                                 data-row={index}
                                 data-field="precio"
-                                className="w-full px-3 py-2 text-sm border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
+                                className="w-full px-3 py-2 text-sm border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-gray-400 transition-all duration-300 font-medium bg-white"
                                 placeholder="0.00"
                               />
                             </div>
@@ -663,7 +663,7 @@ export default function Salidas() {
                               }}
                               data-row={index}
                               data-field="producto"
-                              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
+                              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-gray-300 focus:border-gray-400 transition-all duration-300 font-medium bg-white"
                               placeholder="Buscar producto..."
                               autoComplete="off"
                             />
@@ -673,10 +673,10 @@ export default function Salidas() {
                                   <div
                                     key={producto._id}
                                     onClick={() => seleccionarProducto(index, producto)}
-                                    className="px-4 py-3 hover:bg-gradient-to-r hover:from-purple-50 hover:via-pink-50 hover:to-fuchsia-50 cursor-pointer transition-all duration-200 border-b border-purple-100 last:border-b-0"
+                                    className="px-4 py-3 hover:bg-gradient-to-r hover:from-purple-50 hover:via-pink-50 hover:to-fuchsia-50 cursor-pointer transition-all duration-200 border-b border-gray-100 last:border-b-0"
                                   >
                                     <div className="font-bold text-purple-900">{producto.nombre}</div>
-                                    <div className="text-sm text-purple-600 mt-1">
+                                    <div className="text-sm text-gray-500 mt-1">
                                       Stock: {producto.cantidad} | Precio: ${producto.precio.toFixed(2)}
                                       {producto.codigoBarras && ` | Código: ${producto.codigoBarras}`}
                                     </div>
@@ -697,7 +697,7 @@ export default function Salidas() {
                               }
                               data-row={index}
                               data-field="cantidad"
-                              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
+                              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-gray-300 focus:border-gray-400 transition-all duration-300 font-medium bg-white"
                               placeholder="Cantidad"
                               title={`Máximo: ${stockDisponible}`}
                             />
@@ -714,7 +714,7 @@ export default function Salidas() {
                               }
                               data-row={index}
                               data-field="precio"
-                              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition-all duration-300 font-medium bg-white"
+                              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-purple-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-gray-300 focus:border-gray-400 transition-all duration-300 font-medium bg-white"
                               placeholder="0.00"
                             />
                           </div>
@@ -727,7 +727,7 @@ export default function Salidas() {
                             <button
                               type="button"
                               onClick={() => eliminarItem(index)}
-                              className="text-red-500 hover:text-red-700 transition-colors duration-200 text-lg sm:text-xl font-bold"
+                              className="text-gray-500 hover:text-gray-700 transition-colors duration-200 text-lg sm:text-xl font-bold"
                               title="Eliminar renglón"
                             >
                               🗑️
@@ -741,14 +741,14 @@ export default function Salidas() {
               </div>
 
               {items.length > 0 && (
-                <div className="bg-gradient-to-r from-purple-100 to-pink-100 border-2 border-purple-300 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 mb-3 sm:mb-4 shadow-lg">
+                <div className="bg-gradient-to-r from-gray-100 to-gray-200 border-2 border-gray-300 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 mb-3 sm:mb-4 shadow-lg">
                   <p className="text-sm sm:text-base font-bold text-purple-900">
                     💎 Total de la Venta: ${items.reduce((sum, item) => sum + item.cantidad * item.precio, 0).toFixed(2)}
                   </p>
                 </div>
               )}
 
-              <div className="flex flex-col sm:flex-row sm:justify-end gap-3 sm:gap-4 pt-4 sm:pt-6 border-t-2 border-purple-100">
+              <div className="flex flex-col sm:flex-row sm:justify-end gap-3 sm:gap-4 pt-4 sm:pt-6 border-t-2 border-gray-100">
                 <button
                   type="button"
                   onClick={() => {
@@ -758,17 +758,17 @@ export default function Salidas() {
                     setSugerencias({});
                     setMostrarSugerencias({});
                   }}
-                  className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-purple-300 rounded-xl sm:rounded-2xl text-purple-700 font-bold hover:bg-purple-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 w-full sm:w-auto text-sm sm:text-base"
+                  className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-gray-300 rounded-xl sm:rounded-2xl text-gray-600 font-bold hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 w-full sm:w-auto text-sm sm:text-base"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={items.length === 0}
-                  className={`px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold transition-all duration-300 shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 sm:hover:scale-110 flex items-center justify-center space-x-2 w-full sm:w-auto text-sm sm:text-base ${
+                  className={`px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold transition-all duration-300 shadow-2xl hover:shadow-gray-400/50 transform hover:scale-105 sm:hover:scale-110 flex items-center justify-center space-x-2 w-full sm:w-auto text-sm sm:text-base ${
                     items.length === 0
                       ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 text-white hover:from-purple-700 hover:via-pink-600 hover:to-fuchsia-700'
+                      : 'bg-gradient-to-r from-gray-400 via-gray-500 to-gray-400 text-white hover:from-gray-500 hover:via-gray-600 hover:to-gray-500'
                   }`}
                 >
                   <span>✨</span>
