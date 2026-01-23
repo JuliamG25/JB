@@ -233,10 +233,8 @@ export default function Inventario() {
                     <div>
                       <span className="text-gray-500 font-semibold">Stock:</span>
                       <span className={`ml-1 inline-flex items-center px-2 py-1 rounded-full text-xs font-bold shadow-md ${
-                        producto.cantidad > 10
-                          ? 'bg-gradient-to-r from-gray-300 to-gray-400 text-white'
-                          : producto.cantidad > 5
-                          ? 'bg-gradient-to-r from-yellow-400 to-orange-400 text-white'
+                        producto.cantidad > 0
+                          ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white'
                           : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white'
                       }`}>
                         {producto.cantidad} unidades
@@ -318,10 +316,8 @@ export default function Inventario() {
                         </td>
                         <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 whitespace-nowrap">
                           <span className={`inline-flex items-center px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-bold shadow-md ${
-                            producto.cantidad > 10
-                              ? 'bg-gradient-to-r from-gray-300 to-gray-400 text-white'
-                              : producto.cantidad > 5
-                              ? 'bg-gradient-to-r from-yellow-400 to-orange-400 text-white'
+                            producto.cantidad > 0
+                              ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white'
                               : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white'
                           }`}>
                             {producto.cantidad} unidades
