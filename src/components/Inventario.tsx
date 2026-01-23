@@ -144,7 +144,7 @@ export default function Inventario() {
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-gray-400 mb-6"></div>
-          <p className="text-purple-700 text-xl font-bold">Cargando productos de belleza...</p>
+          <p className="text-gray-600 text-xl font-bold">Cargando productos de belleza...</p>
         </div>
       </div>
     );
@@ -179,14 +179,14 @@ export default function Inventario() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-gray-500 via-gray-400 to-gray-500 bg-clip-text text-transparent mb-2">
             💄 Inventario de Productos
           </h2>
-          <p className="text-purple-700 mt-2 text-sm sm:text-base md:text-lg font-medium">Gestiona tu catálogo de productos de belleza</p>
+          <p className="text-gray-600 mt-2 text-sm sm:text-base md:text-lg font-medium">Gestiona tu catálogo de productos de belleza</p>
         </div>
         <button
           onClick={() => {
             resetForm();
             setShowModal(true);
           }}
-          className="bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold hover:from-gray-500 hover:via-gray-600 hover:to-gray-500 transition-all duration-300 shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 sm:hover:scale-110 flex items-center justify-center space-x-2 sm:space-x-3 border-2 border-white/30 backdrop-blur-sm w-full sm:w-auto"
+          className="bg-gradient-to-r from-gray-400 via-gray-500 to-gray-400 text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold hover:from-gray-500 hover:via-gray-600 hover:to-gray-500 transition-all duration-300 shadow-2xl hover:shadow-gray-400/50 transform hover:scale-105 sm:hover:scale-110 flex items-center justify-center space-x-2 sm:space-x-3 border-2 border-white/30 backdrop-blur-sm w-full sm:w-auto"
         >
           <span className="text-xl sm:text-2xl">✨</span>
           <span className="text-sm sm:text-base md:text-lg">Nuevo Producto</span>
@@ -194,9 +194,9 @@ export default function Inventario() {
       </div>
 
       {productos.length === 0 ? (
-        <div className="text-center py-12 sm:py-16 md:py-24 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-dashed border-gray-300 px-4">
+        <div className="text-center py-12 sm:py-16 md:py-24 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-dashed border-gray-300 px-4">
           <div className="text-5xl sm:text-6xl md:text-7xl mb-4 sm:mb-6 animate-pulse">💄</div>
-          <p className="text-purple-700 text-xl sm:text-2xl font-bold mb-2 sm:mb-3">No hay productos registrados</p>
+          <p className="text-gray-600 text-xl sm:text-2xl font-bold mb-2 sm:mb-3">No hay productos registrados</p>
           <p className="text-gray-500 text-sm sm:text-base font-medium">Comienza agregando tu primer producto de belleza</p>
         </div>
       ) : (
@@ -208,7 +208,7 @@ export default function Inventario() {
               return (
                 <div
                   key={producto._id}
-                  className="bg-gradient-to-r from-purple-50 via-pink-50 to-fuchsia-50 rounded-xl p-4 border-2 border-gray-200"
+                  className="bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 rounded-xl p-4 border-2 border-gray-200"
                 >
                   <div className="flex items-center mb-3">
                     <div className="flex-shrink-0 h-10 w-10 bg-gradient-to-br from-gray-400 via-gray-500 to-gray-400 rounded-xl flex items-center justify-center text-white font-bold mr-3 shadow-lg">
@@ -223,15 +223,15 @@ export default function Inventario() {
                   </div>
                   <div className="grid grid-cols-2 gap-2 text-xs mb-3">
                     <div>
-                      <span className="text-purple-600 font-semibold">Precio:</span>
+                      <span className="text-gray-500 font-semibold">Precio:</span>
                       <span className="ml-1 text-gray-600 font-bold">${producto.precio.toFixed(2)}</span>
                     </div>
                     <div>
-                      <span className="text-purple-600 font-semibold">Costo:</span>
+                      <span className="text-gray-500 font-semibold">Costo:</span>
                       <span className="ml-1 text-gray-600 font-medium">${producto.costo.toFixed(2)}</span>
                     </div>
                     <div>
-                      <span className="text-purple-600 font-semibold">Stock:</span>
+                      <span className="text-gray-500 font-semibold">Stock:</span>
                       <span className={`ml-1 inline-flex items-center px-2 py-1 rounded-full text-xs font-bold shadow-md ${
                         producto.cantidad > 10
                           ? 'bg-gradient-to-r from-gray-300 to-gray-400 text-white'
@@ -243,14 +243,14 @@ export default function Inventario() {
                       </span>
                     </div>
                     <div>
-                      <span className="text-purple-600 font-semibold">Ganancia:</span>
+                      <span className="text-gray-500 font-semibold">Ganancia:</span>
                       <span className="ml-1 text-gray-600 font-bold">${ganancia.toFixed(2)}</span>
                     </div>
                   </div>
                   <div className="flex gap-2 pt-3 border-t border-gray-200">
                     <button
                       onClick={() => handleEdit(producto)}
-                      className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-2 rounded-lg hover:from-gray-500 hover:to-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold text-xs sm:text-sm"
+                      className="flex-1 bg-gradient-to-r from-gray-400 to-gray-500 text-white px-3 py-2 rounded-lg hover:from-gray-500 hover:to-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold text-xs sm:text-sm"
                     >
                       ✏️ Editar
                     </button>
@@ -331,7 +331,7 @@ export default function Inventario() {
                           <div className="flex items-center space-x-2 sm:space-x-3">
                             <button
                               onClick={() => handleEdit(producto)}
-                              className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl hover:from-gray-500 hover:to-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110 font-semibold text-xs sm:text-sm"
+                              className="bg-gradient-to-r from-gray-400 to-gray-500 text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl hover:from-gray-500 hover:to-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110 font-semibold text-xs sm:text-sm"
                             >
                               ✏️ Editar
                             </button>
@@ -356,7 +356,7 @@ export default function Inventario() {
       {showModal && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-2 sm:p-4 animate-fadeIn overflow-y-auto">
           <div className="bg-white/95 backdrop-blur-lg rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-md my-2 sm:my-4 transform transition-all animate-slideUp border-2 border-gray-200/50 max-h-[95vh] sm:max-h-[calc(100vh-200px)] overflow-y-auto">
-            <div className="bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 px-4 sm:px-6 py-3 sm:py-4 rounded-t-xl sm:rounded-t-2xl border-b-2 border-gray-300/30 sticky top-0 z-10">
+            <div className="bg-gradient-to-r from-gray-400 via-gray-500 to-gray-400 px-4 sm:px-6 py-3 sm:py-4 rounded-t-xl sm:rounded-t-2xl border-b-2 border-gray-300/30 sticky top-0 z-10">
               <h3 className="text-xl sm:text-2xl font-bold text-white flex items-center space-x-2">
                 <span className="text-2xl sm:text-3xl">{editingProducto ? '✨' : '💄'}</span>
                 <span>{editingProducto ? 'Editar Producto' : 'Nuevo Producto'}</span>
@@ -467,13 +467,13 @@ export default function Inventario() {
                     setShowModal(false);
                     resetForm();
                   }}
-                  className="px-5 sm:px-6 py-2 sm:py-2.5 border-2 border-gray-300 rounded-lg sm:rounded-xl text-purple-700 font-bold hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 text-xs sm:text-sm w-full sm:w-auto"
+                  className="px-5 sm:px-6 py-2 sm:py-2.5 border-2 border-gray-300 rounded-lg sm:rounded-xl text-gray-600 font-bold hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 text-xs sm:text-sm w-full sm:w-auto"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="px-5 sm:px-6 py-2 sm:py-2.5 bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-600 text-white rounded-lg sm:rounded-xl font-bold hover:from-gray-500 hover:via-gray-600 hover:to-gray-500 transition-all duration-300 shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 sm:hover:scale-110 flex items-center justify-center space-x-2 text-xs sm:text-sm w-full sm:w-auto"
+                  className="px-5 sm:px-6 py-2 sm:py-2.5 bg-gradient-to-r from-gray-400 via-gray-500 to-gray-400 text-white rounded-lg sm:rounded-xl font-bold hover:from-gray-500 hover:via-gray-600 hover:to-gray-500 transition-all duration-300 shadow-2xl hover:shadow-gray-400/50 transform hover:scale-105 sm:hover:scale-110 flex items-center justify-center space-x-2 text-xs sm:text-sm w-full sm:w-auto"
                 >
                   <span>{editingProducto ? '💾' : '✨'}</span>
                   <span>{editingProducto ? 'Actualizar' : 'Crear'}</span>
